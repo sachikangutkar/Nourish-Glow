@@ -1,0 +1,6 @@
+{
+  "name": "Nourish Glow",
+  "description": "Next-generation AI Dermatology & Skincare Intelligence with real-time computer vision facial scanning, clinical diagnostic formulations, and personalized routine optimization.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

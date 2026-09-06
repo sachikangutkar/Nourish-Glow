@@ -1,0 +1,138 @@
+{
+  "entities": {
+    "RoutineStep": {
+      "title": "RoutineStep",
+      "description": "A single step within a skincare routine",
+      "type": "object",
+      "properties": {
+        "step": {
+          "type": "integer"
+        },
+        "category": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "purpose": {
+          "type": "string"
+        },
+        "instructions": {
+          "type": "string"
+        },
+        "activeIngredients": {
+          "type": "array"
+        },
+        "completed": {
+          "type": "boolean"
+        }
+      },
+      "required": ["step", "category", "name", "completed"]
+    },
+    "DailyLog": {
+      "title": "DailyLog",
+      "description": "A daily status log tracking skin parameters and selfies",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "skinRating": {
+          "type": "integer"
+        },
+        "waterIntake": {
+          "type": "integer"
+        },
+        "sleepHours": {
+          "type": "integer"
+        },
+        "stressLevel": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        },
+        "amCompleted": {
+          "type": "boolean"
+        },
+        "pmCompleted": {
+          "type": "boolean"
+        },
+        "selfieUrl": {
+          "type": "string"
+        },
+        "loggedAt": {
+          "type": "string"
+        }
+      },
+      "required": ["id", "date", "skinRating", "waterIntake", "sleepHours", "stressLevel", "notes", "amCompleted", "pmCompleted"]
+    },
+    "PaymentCard": {
+      "title": "PaymentCard",
+      "description": "User saved payment card",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "cardholderName": {
+          "type": "string"
+        },
+        "cardNumber": {
+          "type": "string"
+        },
+        "expiryDate": {
+          "type": "string"
+        },
+        "cardBrand": {
+          "type": "string"
+        },
+        "isDefault": {
+          "type": "boolean"
+        },
+        "billingZip": {
+          "type": "string"
+        }
+      },
+      "required": ["id", "cardholderName", "cardNumber", "expiryDate", "cardBrand"]
+    },
+    "OrderRecord": {
+      "title": "OrderRecord",
+      "description": "User completed skincare e-commerce order record in INR",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "items": { "type": "array" },
+        "shippingAddress": { "type": "object" },
+        "pricing": { "type": "object" },
+        "payment": { "type": "object" },
+        "orderStatus": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "estimatedDeliveryDate": { "type": "string" }
+      },
+      "required": ["id", "items", "shippingAddress", "pricing", "payment", "orderStatus", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/routines/{regime}/steps/{stepId}": {
+      "schema": "RoutineStep",
+      "description": "User AM/PM routine skincare steps"
+    },
+    "/users/{userId}/logs/{logId}": {
+      "schema": "DailyLog",
+      "description": "User daily status trackings and diagnostic selfies"
+    },
+    "/users/{userId}/paymentCards/{cardId}": {
+      "schema": "PaymentCard",
+      "description": "User saved payment methods"
+    },
+    "/users/{userId}/orders/{orderId}": {
+      "schema": "OrderRecord",
+      "description": "User skincare e-commerce orders"
+    }
+  }
+}

@@ -1,0 +1,126 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Connection test document
+    match /test/{testId} {
+      allow read: if true;
+    }
+
+    // Global Safety Net default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Entity validation functions
+    function isValidRoutineStep(data) {
+      return data.step is int 
+        && data.step >= 1 
+        && data.step <= 30
+        && data.category is string 
+        && data.category.size() <= 100
+        && data.name is string 
+        && data.name.size() <= 200
+        && data.purpose is string
+        && data.purpose.size() <= 500
+        && data.instructions is string
+        && data.instructions.size() <= 1000
+        && data.completed is bool
+        && data.activeIngredients is list
+        && (data.activeIngredients.size() == 0 || data.activeIngredients[0] is string)
+        && data.activeIngredients.size() <= 15;
+    }
+
+    function isValidDailyLog(data) {
+      return data.id is string
+        && data.id.size() <= 128
+        && data.date is string
+        && data.date.size() <= 32
+        && data.skinRating is int
+        && data.skinRating >= 1
+        && data.skinRating <= 10
+        && data.waterIntake is int
+        && data.waterIntake >= 0
+        && data.waterIntake <= 30
+        && data.sleepHours is int
+        && data.sleepHours >= 0
+        && data.sleepHours <= 24
+        && data.stressLevel is string
+        && (data.stressLevel == 'Low' || data.stressLevel == 'Medium' || data.stressLevel == 'High')
+        && data.notes is string
+        && data.notes.size() <= 2000
+        && data.amCompleted is bool
+        && data.pmCompleted is bool
+        && (data.selfieUrl == null || (data.selfieUrl is string && data.selfieUrl.size() <= 1000))
+        && data.loggedAt is string
+        && data.loggedAt.size() <= 64;
+    }
+
+    // User Profile Document
+    match /users/{userId} {
+      allow read, write: if isOwner(userId);
+    }
+
+    // User Payment Cards
+    match /users/{userId}/paymentCards/{cardId} {
+      allow read: if isOwner(userId);
+      allow create, update: if isOwner(userId) && isValidId(cardId);
+      allow delete: if isOwner(userId);
+    }
+
+    // User E-Commerce Orders
+    match /users/{userId}/orders/{orderId} {
+      allow read, create, update, delete: if isOwner(userId);
+    }
+
+    // User Routine Steps
+    match /users/{userId}/routines/{regime}/steps/{stepId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId) 
+        && isValidId(stepId) 
+        && isValidRoutineStep(incoming());
+      allow update: if isOwner(userId) 
+        && isValidRoutineStep(incoming())
+        && (
+          // Action Toggle Complete
+          incoming().diff(existing()).affectedKeys().hasOnly(['completed']) ||
+          // Action Full Edit
+          incoming().diff(existing()).affectedKeys().hasAll(['name', 'category', 'purpose', 'instructions', 'activeIngredients'])
+        );
+      allow delete: if isOwner(userId);
+    }
+
+    // User Daily Logs
+    match /users/{userId}/logs/{logId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId) 
+        && isValidId(logId) 
+        && isValidDailyLog(incoming());
+      allow update: if isOwner(userId) 
+        && isValidDailyLog(incoming())
+        && incoming().diff(existing()).affectedKeys().hasOnly(['notes', 'skinRating', 'waterIntake', 'sleepHours', 'stressLevel']);
+      allow delete: if isOwner(userId);
+    }
+  }
+}

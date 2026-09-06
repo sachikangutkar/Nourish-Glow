@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", "Georgia", ui-serif, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Sakura Skin Luxury Palette */
+  --color-sakura-primary: #F43F5E;
+  --color-sakura-primary-hover: #E11D48;
+  --color-sakura-blossom: #FFF1F5;
+  --color-sakura-blossom-light: #FFF7FA;
+  --color-sakura-rose: #FB7185;
+  --color-sakura-petal: #FDA4AF;
+  --color-sakura-bg: #FAF9F8;
+  --color-sakura-card: #FFFFFF;
+  --color-sakura-border: #F3E8E8;
+  --color-sakura-text: #0F172A;
+  --color-sakura-text-muted: #64748B;
+
+  /* Natural Tones Custom Palette (Compatibility) */
+  --color-natural-bg: #FAF9F8;
+  --color-natural-text-primary: #1E293B;
+  --color-natural-text-secondary: #64748B;
+  --color-natural-sage: #F43F5E;
+  --color-natural-sage-hover: #E11D48;
+  --color-natural-sage-light: #FFF1F5;
+  --color-natural-terracotta: #E11D48;
+  --color-natural-terracotta-hover: #BE123C;
+  --color-natural-clay: #FB7185;
+  --color-natural-border: #F1E5E5;
+  --color-natural-border-dark: #E2D1D1;
+  --color-natural-card: #FFFFFF;
+  --color-natural-white: #FFFFFF;
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-slide-left {
+    animation: slideLeft 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-spin-slow {
+    animation: spin 8s linear infinite;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nourish Glow • AI Dermatology & Skincare Intelligence</title>
+    <meta name="description" content="Next-generation AI Dermatology & Skincare Intelligence with real-time computer vision facial scanning, clinical diagnostic formulations, and personalized routine optimization." />
+    <meta property="og:title" content="Nourish Glow • AI Dermatology & Skincare Intelligence" />
+    <meta property="og:description" content="Next-generation AI Dermatology & Skincare Intelligence with real-time computer vision facial scanning, clinical diagnostic formulations, and personalized routine optimization." />
+    <script>
+      (function() {
+        // Intercept TensorFlow Lite / MediaPipe Wasm diagnostic messages routed to stderr/console.error
+        const origConsoleError = console.error;
+        console.error = function(...args) {
+          const msg = args[0];
+          if (
+            typeof msg === 'string' &&
+            (msg.includes('INFO: Created TensorFlow Lite') ||
+             msg.includes('XNNPACK delegate') ||
+             msg.startsWith('INFO:'))
+          ) {
+            console.info(...args);
+            return;
+          }
+          origConsoleError.apply(console, args);
+        };
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

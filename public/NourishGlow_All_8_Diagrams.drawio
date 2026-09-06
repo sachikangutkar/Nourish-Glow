@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2026-08-27T11:00:00.000Z" agent="Mozilla/5.0" version="24.7.5" type="device">
+  <!-- PAGE 1: EVENT TABLE -->
+  <diagram id="page1" name="1. Event Table">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="950" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title1" value="1. EVENT TABLE (Multi-Actor Specification)" style="text;html=1;fontSize=18;fontStyle=1;align=left;verticalAlign=middle;fontColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="40" y="25" width="500" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="table1" value="" style="shape=table;html=1;whiteSpace=wrap;startSize=0;container=1;collapsible=0;childLayout=tableLayout;strokeColor=#64748b;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="40" y="70" width="1120" height="625" as="geometry" />
+        </mxCell>
+        
+        <!-- Header Row -->
+        <mxCell id="r0" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[];portConstraint=eastwest;" vertex="1" parent="table1">
+          <mxGeometry width="1120" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="th0" value="#" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=#334155;fontColor=#ffffff;fontStyle=1;fontSize=11;align=center;strokeColor=#475569;" vertex="1" parent="r0"><mxGeometry width="40" height="45" as="geometry" /></mxCell>
+        <mxCell id="th1" value="Event" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=#334155;fontColor=#ffffff;fontStyle=1;fontSize=11;align=center;strokeColor=#475569;" vertex="1" parent="r0"><mxGeometry x="40" width="170" height="45" as="geometry" /></mxCell>
+        <mxCell id="th2" value="Trigger" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=#334155;fontColor=#ffffff;fontStyle=1;fontSize=11;align=center;strokeColor=#475569;" vertex="1" parent="r0"><mxGeometry x="210" width="180" height="45" as="geometry" /></mxCell>
+        <mxCell id="th3" value="Source" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=#334155;fontColor=#ffffff;fontStyle=1;fontSize=11;align=center;strokeColor=#475569;" vertex="1" parent="r0"><mxGeometry x="390" width="120" height="45" as="geometry" /></mxCell>
+        <mxCell id="th4" value="Use Case" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=#334155;fontColor=#ffffff;fontStyle=1;fontSize=11;align=center;strokeColor=#475569;" vertex="1" parent="r0"><mxGeometry x="510" width="190" height="45" as="geometry" /></mxCell>
+        <mxCell id="th5" value="System Response" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=#334155;fontColor=#ffffff;fontStyle=1;fontSize=11;align=center;strokeColor=#475569;" vertex="1" parent="r0"><mxGeometry x="700" width="250" height="45" as="geometry" /></mxCell>
+        <mxCell id="th6" value="Destination" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=#334155;fontColor=#ffffff;fontStyle=1;fontSize=11;align=center;strokeColor=#475569;" vertex="1" parent="r0"><mxGeometry x="950" width="170" height="45" as="geometry" /></mxCell>
+
+        <!-- Rows 1 to 12 -->
+        <!-- Row 1 -->
+        <mxCell id="r1" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[];portConstraint=eastwest;" vertex="1" parent="table1"><mxGeometry y="45" width="1120" height="45" as="geometry" /></mxCell>
+        <mxCell id="r1c0" value="1" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=center;fillColor=#f8fafc;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r1"><mxGeometry width="40" height="45" as="geometry" /></mxCell>
+        <mxCell id="r1c1" value="User Registration" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r1"><mxGeometry x="40" width="170" height="45" as="geometry" /></mxCell>
+        <mxCell id="r1c2" value="Clicks Register" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;" vertex="1" parent="r1"><mxGeometry x="210" width="180" height="45" as="geometry" /></mxCell>
+        <mxCell id="r1c3" value="User" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=center;fillColor=#f8fafc;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r1"><mxGeometry x="390" width="120" height="45" as="geometry" /></mxCell>
+        <mxCell id="r1c4" value="Create Account" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;" vertex="1" parent="r1"><mxGeometry x="510" width="190" height="45" as="geometry" /></mxCell>
+        <mxCell id="r1c5" value="Validates details and creates profile" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;" vertex="1" parent="r1"><mxGeometry x="700" width="250" height="45" as="geometry" /></mxCell>
+        <mxCell id="r1c6" value="User Dashboard" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;" vertex="1" parent="r1"><mxGeometry x="950" width="170" height="45" as="geometry" /></mxCell>
+
+        <!-- Row 2 -->
+        <mxCell id="r2" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[];portConstraint=eastwest;" vertex="1" parent="table1"><mxGeometry y="90" width="1120" height="45" as="geometry" /></mxCell>
+        <mxCell id="r2c0" value="2" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=center;fillColor=#ffffff;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r2"><mxGeometry width="40" height="45" as="geometry" /></mxCell>
+        <mxCell id="r2c1" value="Facial Scan Request" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r2"><mxGeometry x="40" width="170" height="45" as="geometry" /></mxCell>
+        <mxCell id="r2c2" value="Uploads selfie photo" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;" vertex="1" parent="r2"><mxGeometry x="210" width="180" height="45" as="geometry" /></mxCell>
+        <mxCell id="r2c3" value="User" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=center;fillColor=#ffffff;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r2"><mxGeometry x="390" width="120" height="45" as="geometry" /></mxCell>
+        <mxCell id="r2c4" value="Request Skin Analysis" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;" vertex="1" parent="r2"><mxGeometry x="510" width="190" height="45" as="geometry" /></mxCell>
+        <mxCell id="r2c5" value="Preprocesses image and passes to Vision API" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;" vertex="1" parent="r2"><mxGeometry x="700" width="250" height="45" as="geometry" /></mxCell>
+        <mxCell id="r2c6" value="AI Engine" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;" vertex="1" parent="r2"><mxGeometry x="950" width="170" height="45" as="geometry" /></mxCell>
+
+        <!-- Row 3 -->
+        <mxCell id="r3" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[];portConstraint=eastwest;" vertex="1" parent="table1"><mxGeometry y="135" width="1120" height="45" as="geometry" /></mxCell>
+        <mxCell id="r3c0" value="3" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=center;fillColor=#f8fafc;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r3"><mxGeometry width="40" height="45" as="geometry" /></mxCell>
+        <mxCell id="r3c1" value="Skin Metrics Evaluated" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r3"><mxGeometry x="40" width="170" height="45" as="geometry" /></mxCell>
+        <mxCell id="r3c2" value="Vision inference complete" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;" vertex="1" parent="r3"><mxGeometry x="210" width="180" height="45" as="geometry" /></mxCell>
+        <mxCell id="r3c3" value="AI Engine" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=center;fillColor=#f8fafc;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r3"><mxGeometry x="390" width="120" height="45" as="geometry" /></mxCell>
+        <mxCell id="r3c4" value="Analyze Skin Condition" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;" vertex="1" parent="r3"><mxGeometry x="510" width="190" height="45" as="geometry" /></mxCell>
+        <mxCell id="r3c5" value="Computes acne, hydration, oiliness scores" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;" vertex="1" parent="r3"><mxGeometry x="700" width="250" height="45" as="geometry" /></mxCell>
+        <mxCell id="r3c6" value="Skin Analysis Result" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;" vertex="1" parent="r3"><mxGeometry x="950" width="170" height="45" as="geometry" /></mxCell>
+
+        <!-- Row 4 -->
+        <mxCell id="r4" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[];portConstraint=eastwest;" vertex="1" parent="table1"><mxGeometry y="180" width="1120" height="45" as="geometry" /></mxCell>
+        <mxCell id="r4c0" value="4" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=center;fillColor=#ffffff;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r4"><mxGeometry width="40" height="45" as="geometry" /></mxCell>
+        <mxCell id="r4c1" value="Routine Formulation" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r4"><mxGeometry x="40" width="170" height="45" as="geometry" /></mxCell>
+        <mxCell id="r4c2" value="Scan + Quiz data received" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;" vertex="1" parent="r4"><mxGeometry x="210" width="180" height="45" as="geometry" /></mxCell>
+        <mxCell id="r4c3" value="AI Engine" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=center;fillColor=#ffffff;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r4"><mxGeometry x="390" width="120" height="45" as="geometry" /></mxCell>
+        <mxCell id="r4c4" value="Generate Skincare Routine" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;" vertex="1" parent="r4"><mxGeometry x="510" width="190" height="45" as="geometry" /></mxCell>
+        <mxCell id="r4c5" value="Formulates personalized AM/PM regimen" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;" vertex="1" parent="r4"><mxGeometry x="700" width="250" height="45" as="geometry" /></mxCell>
+        <mxCell id="r4c6" value="User Routine View" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;" vertex="1" parent="r4"><mxGeometry x="950" width="170" height="45" as="geometry" /></mxCell>
+
+        <!-- Row 5 -->
+        <mxCell id="r5" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[];portConstraint=eastwest;" vertex="1" parent="table1"><mxGeometry y="225" width="1120" height="45" as="geometry" /></mxCell>
+        <mxCell id="r5c0" value="5" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=center;fillColor=#f8fafc;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r5"><mxGeometry width="40" height="45" as="geometry" /></mxCell>
+        <mxCell id="r5c1" value="Add to Cart" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r5"><mxGeometry x="40" width="170" height="45" as="geometry" /></mxCell>
+        <mxCell id="r5c2" value="Clicks Add to Cart" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;" vertex="1" parent="r5"><mxGeometry x="210" width="180" height="45" as="geometry" /></mxCell>
+        <mxCell id="r5c3" value="User" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=center;fillColor=#f8fafc;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r5"><mxGeometry x="390" width="120" height="45" as="geometry" /></mxCell>
+        <mxCell id="r5c4" value="Manage Cart" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;" vertex="1" parent="r5"><mxGeometry x="510" width="190" height="45" as="geometry" /></mxCell>
+        <mxCell id="r5c5" value="Updates cart quantities and 18% GST" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;" vertex="1" parent="r5"><mxGeometry x="700" width="250" height="45" as="geometry" /></mxCell>
+        <mxCell id="r5c6" value="Shopping Cart" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;" vertex="1" parent="r5"><mxGeometry x="950" width="170" height="45" as="geometry" /></mxCell>
+
+        <!-- Row 6 -->
+        <mxCell id="r6" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[];portConstraint=eastwest;" vertex="1" parent="table1"><mxGeometry y="270" width="1120" height="45" as="geometry" /></mxCell>
+        <mxCell id="r6c0" value="6" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=center;fillColor=#ffffff;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r6"><mxGeometry width="40" height="45" as="geometry" /></mxCell>
+        <mxCell id="r6c1" value="Payment Initiation" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r6"><mxGeometry x="40" width="170" height="45" as="geometry" /></mxCell>
+        <mxCell id="r6c2" value="Clicks Pay Now" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;" vertex="1" parent="r6"><mxGeometry x="210" width="180" height="45" as="geometry" /></mxCell>
+        <mxCell id="r6c3" value="User" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=center;fillColor=#ffffff;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r6"><mxGeometry x="390" width="120" height="45" as="geometry" /></mxCell>
+        <mxCell id="r6c4" value="Process Checkout" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;" vertex="1" parent="r6"><mxGeometry x="510" width="190" height="45" as="geometry" /></mxCell>
+        <mxCell id="r6c5" value="Creates order token and opens payment modal" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;" vertex="1" parent="r6"><mxGeometry x="700" width="250" height="45" as="geometry" /></mxCell>
+        <mxCell id="r6c6" value="Payment Gateway" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;" vertex="1" parent="r6"><mxGeometry x="950" width="170" height="45" as="geometry" /></mxCell>
+
+        <!-- Row 7 -->
+        <mxCell id="r7" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[];portConstraint=eastwest;" vertex="1" parent="table1"><mxGeometry y="315" width="1120" height="45" as="geometry" /></mxCell>
+        <mxCell id="r7c0" value="7" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=center;fillColor=#f8fafc;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r7"><mxGeometry width="40" height="45" as="geometry" /></mxCell>
+        <mxCell id="r7c1" value="Payment Settlement" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r7"><mxGeometry x="40" width="170" height="45" as="geometry" /></mxCell>
+        <mxCell id="r7c2" value="Webhook / bank authorization" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;" vertex="1" parent="r7"><mxGeometry x="210" width="180" height="45" as="geometry" /></mxCell>
+        <mxCell id="r7c3" value="Payment Gateway" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=center;fillColor=#f8fafc;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r7"><mxGeometry x="390" width="120" height="45" as="geometry" /></mxCell>
+        <mxCell id="r7c4" value="Verify Payment" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;" vertex="1" parent="r7"><mxGeometry x="510" width="190" height="45" as="geometry" /></mxCell>
+        <mxCell id="r7c5" value="Verifies HMAC SHA-256 and confirms order" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;" vertex="1" parent="r7"><mxGeometry x="700" width="250" height="45" as="geometry" /></mxCell>
+        <mxCell id="r7c6" value="Database / Invoice" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;" vertex="1" parent="r7"><mxGeometry x="950" width="170" height="45" as="geometry" /></mxCell>
+
+        <!-- Row 8 -->
+        <mxCell id="r8" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[];portConstraint=eastwest;" vertex="1" parent="table1"><mxGeometry y="360" width="1120" height="45" as="geometry" /></mxCell>
+        <mxCell id="r8c0" value="8" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=center;fillColor=#ffffff;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r8"><mxGeometry width="40" height="45" as="geometry" /></mxCell>
+        <mxCell id="r8c1" value="Doctor Schedule Set" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r8"><mxGeometry x="40" width="170" height="45" as="geometry" /></mxCell>
+        <mxCell id="r8c2" value="Updates available hours" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;" vertex="1" parent="r8"><mxGeometry x="210" width="180" height="45" as="geometry" /></mxCell>
+        <mxCell id="r8c3" value="Dermatologist" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=center;fillColor=#ffffff;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r8"><mxGeometry x="390" width="120" height="45" as="geometry" /></mxCell>
+        <mxCell id="r8c4" value="Manage Availability" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;" vertex="1" parent="r8"><mxGeometry x="510" width="190" height="45" as="geometry" /></mxCell>
+        <mxCell id="r8c5" value="Publishes bookable appointment slots" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;" vertex="1" parent="r8"><mxGeometry x="700" width="250" height="45" as="geometry" /></mxCell>
+        <mxCell id="r8c6" value="Booking Ledger" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;" vertex="1" parent="r8"><mxGeometry x="950" width="170" height="45" as="geometry" /></mxCell>
+
+        <!-- Row 9 -->
+        <mxCell id="r9" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[];portConstraint=eastwest;" vertex="1" parent="table1"><mxGeometry y="405" width="1120" height="45" as="geometry" /></mxCell>
+        <mxCell id="r9c0" value="9" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=center;fillColor=#f8fafc;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r9"><mxGeometry width="40" height="45" as="geometry" /></mxCell>
+        <mxCell id="r9c1" value="Book Consultation" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r9"><mxGeometry x="40" width="170" height="45" as="geometry" /></mxCell>
+        <mxCell id="r9c2" value="Selects doctor &amp; slot" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;" vertex="1" parent="r9"><mxGeometry x="210" width="180" height="45" as="geometry" /></mxCell>
+        <mxCell id="r9c3" value="User" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=center;fillColor=#f8fafc;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r9"><mxGeometry x="390" width="120" height="45" as="geometry" /></mxCell>
+        <mxCell id="r9c4" value="Book Consultation" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;" vertex="1" parent="r9"><mxGeometry x="510" width="190" height="45" as="geometry" /></mxCell>
+        <mxCell id="r9c5" value="Locks calendar slot and alerts doctor" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;" vertex="1" parent="r9"><mxGeometry x="700" width="250" height="45" as="geometry" /></mxCell>
+        <mxCell id="r9c6" value="Dermatologist View" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;" vertex="1" parent="r9"><mxGeometry x="950" width="170" height="45" as="geometry" /></mxCell>
+
+        <!-- Row 10 -->
+        <mxCell id="r10" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[];portConstraint=eastwest;" vertex="1" parent="table1"><mxGeometry y="450" width="1120" height="45" as="geometry" /></mxCell>
+        <mxCell id="r10c0" value="10" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=center;fillColor=#ffffff;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r10"><mxGeometry width="40" height="45" as="geometry" /></mxCell>
+        <mxCell id="r10c1" value="Submit Clinical Notes" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r10"><mxGeometry x="40" width="170" height="45" as="geometry" /></mxCell>
+        <mxCell id="r10c2" value="Ends consultation session" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;" vertex="1" parent="r10"><mxGeometry x="210" width="180" height="45" as="geometry" /></mxCell>
+        <mxCell id="r10c3" value="Dermatologist" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=center;fillColor=#ffffff;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r10"><mxGeometry x="390" width="120" height="45" as="geometry" /></mxCell>
+        <mxCell id="r10c4" value="Provide Consultation" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;" vertex="1" parent="r10"><mxGeometry x="510" width="190" height="45" as="geometry" /></mxCell>
+        <mxCell id="r10c5" value="Saves medical prescription and suggestions" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;" vertex="1" parent="r10"><mxGeometry x="700" width="250" height="45" as="geometry" /></mxCell>
+        <mxCell id="r10c6" value="User Health Record" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;" vertex="1" parent="r10"><mxGeometry x="950" width="170" height="45" as="geometry" /></mxCell>
+
+        <!-- Row 11 -->
+        <mxCell id="r11" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[];portConstraint=eastwest;" vertex="1" parent="table1"><mxGeometry y="495" width="1120" height="45" as="geometry" /></mxCell>
+        <mxCell id="r11c0" value="11" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=center;fillColor=#f8fafc;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r11"><mxGeometry width="40" height="45" as="geometry" /></mxCell>
+        <mxCell id="r11c1" value="Routine Reminder Alert" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r11"><mxGeometry x="40" width="170" height="45" as="geometry" /></mxCell>
+        <mxCell id="r11c2" value="AM/PM schedule reached" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;" vertex="1" parent="r11"><mxGeometry x="210" width="180" height="45" as="geometry" /></mxCell>
+        <mxCell id="r11c3" value="System Timer" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=center;fillColor=#f8fafc;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r11"><mxGeometry x="390" width="120" height="45" as="geometry" /></mxCell>
+        <mxCell id="r11c4" value="Send Regimen Alert" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;" vertex="1" parent="r11"><mxGeometry x="510" width="190" height="45" as="geometry" /></mxCell>
+        <mxCell id="r11c5" value="Triggers browser push notification" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;" vertex="1" parent="r11"><mxGeometry x="700" width="250" height="45" as="geometry" /></mxCell>
+        <mxCell id="r11c6" value="User Device" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#f8fafc;strokeColor=#cbd5e1;" vertex="1" parent="r11"><mxGeometry x="950" width="170" height="45" as="geometry" /></mxCell>
+
+        <!-- Row 12 -->
+        <mxCell id="r12" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[];portConstraint=eastwest;" vertex="1" parent="table1"><mxGeometry y="540" width="1120" height="45" as="geometry" /></mxCell>
+        <mxCell id="r12c0" value="12" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=center;fillColor=#ffffff;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r12"><mxGeometry width="40" height="45" as="geometry" /></mxCell>
+        <mxCell id="r12c1" value="Progress Journal Logged" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r12"><mxGeometry x="40" width="170" height="45" as="geometry" /></mxCell>
+        <mxCell id="r12c2" value="Submits daily log" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;" vertex="1" parent="r12"><mxGeometry x="210" width="180" height="45" as="geometry" /></mxCell>
+        <mxCell id="r12c3" value="User" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=center;fillColor=#ffffff;strokeColor=#cbd5e1;fontStyle=1;" vertex="1" parent="r12"><mxGeometry x="390" width="120" height="45" as="geometry" /></mxCell>
+        <mxCell id="r12c4" value="Track Skin Progress" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;" vertex="1" parent="r12"><mxGeometry x="510" width="190" height="45" as="geometry" /></mxCell>
+        <mxCell id="r12c5" value="Records daily selfie and metrics timeline" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;" vertex="1" parent="r12"><mxGeometry x="700" width="250" height="45" as="geometry" /></mxCell>
+        <mxCell id="r12c6" value="Progress Journal" style="shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;align=left;spacingLeft=8;fillColor=#ffffff;strokeColor=#cbd5e1;" vertex="1" parent="r12"><mxGeometry x="950" width="170" height="45" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- PAGE 2: CLASS DIAGRAM (TABLE FORMAT) -->
+  <diagram id="page2" name="2. Class Diagram">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title2" value="2. CLASS DIAGRAM (UML Table Format)" style="text;html=1;fontSize=18;fontStyle=1;align=left;verticalAlign=middle;fontColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="500" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- CLASS: User -->
+        <mxCell id="c_user" value="User&#xa;--&#xa;- userId: String&#xa;- name: String&#xa;- email: String&#xa;- password: String&#xa;- skinType: String&#xa;- primaryConcerns: String[]&#xa;--&#xa;+ register()&#xa;+ login()&#xa;+ updateProfile()&#xa;+ viewRoutine()" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#e2e8f0;strokeColor=#475569;fontColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="600" y="60" width="220" height="210" as="geometry" />
+        </mxCell>
+
+        <!-- CLASS: SkinAnalysis -->
+        <mxCell id="c_analysis" value="SkinAnalysis&#xa;--&#xa;- analysisId: String&#xa;- skinType: String&#xa;- acneScore: Double&#xa;- hydrationScore: Double&#xa;- sensitivityScore: Double&#xa;- oilinessScore: Double&#xa;- analysisDate: Date&#xa;--&#xa;+ analyzeSkin()&#xa;+ generateReport()" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#ffffff;strokeColor=#475569;fontColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="60" y="340" width="220" height="210" as="geometry" />
+        </mxCell>
+
+        <!-- CLASS: SkincareRoutine -->
+        <mxCell id="c_routine" value="SkincareRoutine&#xa;--&#xa;- routineId: String&#xa;- morningSteps: String[]&#xa;- eveningSteps: String[]&#xa;- reminders: String&#xa;--&#xa;+ generateRoutine()&#xa;+ updateRoutine()" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#ffffff;strokeColor=#475569;fontColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="60" y="660" width="220" height="170" as="geometry" />
+        </mxCell>
+
+        <!-- CLASS: Cart -->
+        <mxCell id="c_cart" value="Cart&#xa;--&#xa;- cartId: String&#xa;- totalAmount: Double&#xa;--&#xa;+ addProduct()&#xa;+ removeProduct()&#xa;+ calculateTotal()" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#ffffff;strokeColor=#475569;fontColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="360" y="360" width="180" height="160" as="geometry" />
+        </mxCell>
+
+        <!-- CLASS: SkincareProduct -->
+        <mxCell id="c_product" value="SkincareProduct&#xa;--&#xa;- productId: String&#xa;- name: String&#xa;- brand: String&#xa;- category: String&#xa;- priceINR: Double&#xa;- ingredients: String[]&#xa;- stock: Integer&#xa;--&#xa;+ checkAvailability()&#xa;+ calculateDiscount()" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#ffffff;strokeColor=#475569;fontColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="350" y="640" width="200" height="210" as="geometry" />
+        </mxCell>
+
+        <!-- CLASS: Order -->
+        <mxCell id="c_order" value="Order&#xa;--&#xa;- orderId: String&#xa;- orderDate: Date&#xa;- totalAmountINR: Double&#xa;- status: String&#xa;- shippingAddress: Address&#xa;--&#xa;+ createOrder()&#xa;+ updateStatus()&#xa;+ generateInvoice()" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#ffffff;strokeColor=#475569;fontColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="610" y="350" width="200" height="190" as="geometry" />
+        </mxCell>
+
+        <!-- CLASS: Payment -->
+        <mxCell id="c_payment" value="Payment&#xa;--&#xa;- paymentId: String&#xa;- method: String&#xa;- amountINR: Double&#xa;- status: String&#xa;--&#xa;+ processPayment()&#xa;+ verifyPayment()" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#ffffff;strokeColor=#475569;fontColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="620" y="660" width="180" height="160" as="geometry" />
+        </mxCell>
+
+        <!-- CLASS: Dermatologist -->
+        <mxCell id="c_derm" value="Dermatologist&#xa;--&#xa;- dermatologistId: String&#xa;- name: String&#xa;- specialization: String&#xa;- consultationFeeINR: Double&#xa;--&#xa;+ viewAppointment()&#xa;+ provideConsultation()" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#e2e8f0;strokeColor=#475569;fontColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="80" width="220" height="170" as="geometry" />
+        </mxCell>
+
+        <!-- CLASS: ProgressJournal -->
+        <mxCell id="c_journal" value="ProgressJournal&#xa;--&#xa;- entryId: String&#xa;- date: Date&#xa;- skinCondition: String&#xa;- notes: String&#xa;--&#xa;+ addEntry()&#xa;+ viewProgress()" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#ffffff;strokeColor=#475569;fontColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="870" y="360" width="190" height="160" as="geometry" />
+        </mxCell>
+
+        <!-- CLASS: Appointment -->
+        <mxCell id="c_appt" value="Appointment&#xa;--&#xa;- appointmentId: String&#xa;- date: Date&#xa;- time: Time&#xa;- status: String&#xa;--&#xa;+ bookAppointment()&#xa;+ cancelAppointment()" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;fillColor=#ffffff;strokeColor=#475569;fontColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="1130" y="360" width="200" height="160" as="geometry" />
+        </mxCell>
+
+        <!-- Connectors with Multiplicities -->
+        <mxCell id="rel1" value="1 : 1..*" style="endArrow=block;endFill=1;html=1;exitX=0;exitY=0.7;entryX=0.5;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="c_user" target="c_analysis"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="rel2" value="1 : 1" style="endArrow=block;endFill=1;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="c_analysis" target="c_routine"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="rel3" value="1 : 1" style="endArrow=block;endFill=1;html=1;exitX=0.2;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="c_user" target="c_cart"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="rel4" value="1 : 1..*" style="endArrow=diamondThin;startArrow=none;endFill=0;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="c_cart" target="c_product"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="rel5" value="1 : 1..*" style="endArrow=block;endFill=1;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="c_user" target="c_order"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="rel6" value="1 : 1" style="endArrow=block;endFill=1;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="c_order" target="c_payment"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="rel7" value="1 : 1..*" style="endArrow=block;endFill=1;html=1;exitX=0.8;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="c_user" target="c_journal"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="rel8" value="1 : 1..*" style="endArrow=block;endFill=1;html=1;exitX=1;exitY=0.7;entryX=0.3;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="c_user" target="c_appt"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="rel9" value="1 : 1..*" style="endArrow=block;endFill=1;html=1;exitX=0.5;exitY=1;entryX=0.7;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="c_derm" target="c_appt"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- PAGE 3: OBJECT DIAGRAM -->
+  <diagram id="page3" name="3. Object Diagram">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="800" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title3" value="3. OBJECT DIAGRAM (Connected Runtime Instances)" style="text;html=1;fontSize=18;fontStyle=1;align=left;verticalAlign=middle;fontColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="550" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- obj: user1 -->
+        <mxCell id="o_user" value="&lt;u&gt;user1: User&lt;/u&gt;&#xa;userId = &quot;U001&quot;&#xa;name = &quot;Ananya&quot;&#xa;email = &quot;ananya@gmail.com&quot;&#xa;skinType = &quot;Combination&quot;&#xa;concerns = [&quot;Acne&quot;, &quot;Dryness&quot;]" style="rounded=1;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fillColor=#f8fafc;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="540" y="70" width="220" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- obj: analysis1 -->
+        <mxCell id="o_analysis" value="&lt;u&gt;analysis1: SkinAnalysis&lt;/u&gt;&#xa;analysisId = &quot;SA001&quot;&#xa;skinType = &quot;Combination&quot;&#xa;acneScore = 65&#xa;hydrationScore = 72&#xa;sensitivityScore = 30" style="rounded=1;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fillColor=#ffffff;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="60" y="260" width="220" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- obj: routine1 -->
+        <mxCell id="o_routine" value="&lt;u&gt;routine1: SkincareRoutine&lt;/u&gt;&#xa;routineId = &quot;R001&quot;&#xa;morningSteps = [&quot;Cleanser&quot;, &quot;Serum&quot;, &quot;SPF&quot;]&#xa;eveningSteps = [&quot;Cleanser&quot;, &quot;Moisturizer&quot;]" style="rounded=1;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fillColor=#ffffff;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="50" y="460" width="250" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- obj: cart1 -->
+        <mxCell id="o_cart" value="&lt;u&gt;cart1: Cart&lt;/u&gt;&#xa;cartId = &quot;C001&quot;&#xa;totalAmountINR = 499.00" style="rounded=1;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fillColor=#ffffff;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="550" y="270" width="200" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- obj: product1 -->
+        <mxCell id="o_product" value="&lt;u&gt;product1: SkincareProduct&lt;/u&gt;&#xa;productId = &quot;P001&quot;&#xa;name = &quot;Gentle Cleanser&quot;&#xa;brand = &quot;Nourish Glow&quot;&#xa;priceINR = 499.00&#xa;stock = 25" style="rounded=1;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fillColor=#ffffff;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="380" y="450" width="220" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- obj: order1 -->
+        <mxCell id="o_order" value="&lt;u&gt;order1: Order&lt;/u&gt;&#xa;orderId = &quot;NG001&quot;&#xa;orderDate = &quot;2026-08-13&quot;&#xa;totalAmountINR = 499.00&#xa;status = &quot;Confirmed&quot;&#xa;shippingAddress = &quot;Mumbai&quot;" style="rounded=1;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fillColor=#ffffff;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="690" y="450" width="220" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- obj: payment1 -->
+        <mxCell id="o_payment" value="&lt;u&gt;payment1: Payment&lt;/u&gt;&#xa;paymentId = &quot;PAY001&quot;&#xa;method = &quot;UPI&quot;&#xa;amountINR = 499.00&#xa;status = &quot;Paid&quot;" style="rounded=1;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fillColor=#ffffff;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="690" y="630" width="220" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- obj: appt1 -->
+        <mxCell id="o_appt" value="&lt;u&gt;appt1: Appointment&lt;/u&gt;&#xa;appointmentId = &quot;A001&quot;&#xa;date = &quot;2026-08-20&quot;&#xa;time = &quot;11:00 AM&quot;&#xa;status = &quot;Booked&quot;" style="rounded=1;whiteSpace=wrap;html=1;align=left;spacingLeft=10;fillColor=#ffffff;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="990" y="270" width="210" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Instance Links -->
+        <mxCell id="oe1" style="endArrow=none;html=1;exitX=0;exitY=0.7;entryX=0.5;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="o_user" target="o_analysis"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="oe2" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="o_analysis" target="o_routine"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="oe3" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="o_user" target="o_cart"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="oe4" style="endArrow=none;html=1;exitX=0.2;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="o_cart" target="o_product"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="oe5" style="endArrow=none;html=1;exitX=0.8;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="o_cart" target="o_order"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="oe6" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="o_order" target="o_payment"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="oe7" style="endArrow=none;html=1;exitX=1;exitY=0.7;entryX=0.5;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="o_user" target="o_appt"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- PAGE 4: USE CASE DIAGRAM -->
+  <diagram id="page4" name="4. Use Case Diagram">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="800" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title4" value="4. USE CASE DIAGRAM — System Boundary &amp; Actors" style="text;html=1;fontSize=18;fontStyle=1;align=left;verticalAlign=middle;fontColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="550" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Primary Actors (Left) -->
+        <mxCell id="actor_user" value="User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#f8fafc;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="80" y="280" width="40" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="actor_derm" value="Dermatologist" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#f8fafc;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="80" y="480" width="40" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- System Boundary -->
+        <mxCell id="sys_box" value="Skincare Platform Boundary" style="shape=rect;html=1;verticalAlign=top;fontStyle=1;fontSize=14;fillColor=#ffffff;strokeColor=#64748b;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="240" y="70" width="680" height="660" as="geometry" />
+        </mxCell>
+
+        <!-- Use Cases -->
+        <mxCell id="uc1" value="Perform Vision Scan" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1"><mxGeometry x="300" y="100" width="180" height="50" as="geometry" /></mxCell>
+        <mxCell id="uc2" value="Generate AI Routine" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1"><mxGeometry x="300" y="180" width="180" height="50" as="geometry" /></mxCell>
+        <mxCell id="uc3" value="Browse Catalog &amp; Cart" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1"><mxGeometry x="300" y="260" width="180" height="50" as="geometry" /></mxCell>
+        <mxCell id="uc4" value="Process Checkout" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1"><mxGeometry x="640" y="260" width="180" height="50" as="geometry" /></mxCell>
+        <mxCell id="uc5" value="Book Consultation" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1"><mxGeometry x="300" y="360" width="180" height="50" as="geometry" /></mxCell>
+        <mxCell id="uc6" value="Log Progress Journal" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1"><mxGeometry x="300" y="450" width="180" height="50" as="geometry" /></mxCell>
+        <mxCell id="uc7" value="Analyze Ingredients" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1"><mxGeometry x="300" y="540" width="180" height="50" as="geometry" /></mxCell>
+        <mxCell id="uc8" value="Manage Availability" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8fafc;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1"><mxGeometry x="300" y="630" width="180" height="50" as="geometry" /></mxCell>
+
+        <!-- Secondary External Actors (Right) -->
+        <mxCell id="actor_gateway" value="Payment Gateway" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#f8fafc;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="250" width="40" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="actor_ai" value="AI Engine" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;fillColor=#f8fafc;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="140" width="40" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Association Lines -->
+        <mxCell id="ue1" style="endArrow=none;html=1;exitX=1;exitY=0.3;entryX=0;entryY=0.5;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="actor_user" target="uc1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ue2" style="endArrow=none;html=1;exitX=1;exitY=0.4;entryX=0;entryY=0.5;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="actor_user" target="uc2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ue3" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="actor_user" target="uc3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ue5" style="endArrow=none;html=1;exitX=1;exitY=0.6;entryX=0;entryY=0.5;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="actor_user" target="uc5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ue6" style="endArrow=none;html=1;exitX=1;exitY=0.7;entryX=0;entryY=0.5;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="actor_user" target="uc6"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ue7" style="endArrow=none;html=1;exitX=1;exitY=0.8;entryX=0;entryY=0.5;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="actor_user" target="uc7"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="de1" style="endArrow=none;html=1;exitX=1;exitY=0.3;entryX=0;entryY=0.5;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="actor_derm" target="uc5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="de2" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="actor_derm" target="uc7"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="de3" style="endArrow=none;html=1;exitX=1;exitY=0.7;entryX=0;entryY=0.5;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="actor_derm" target="uc8"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <mxCell id="inc1" value="&lt;&lt;include&gt;&gt;" style="endArrow=open;dashed=1;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="uc3" target="uc4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ge1" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="uc4" target="actor_gateway"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ae1" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="uc1" target="actor_ai"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ae2" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.6;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="uc2" target="actor_ai"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ae3" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.8;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="uc7" target="actor_ai"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- PAGE 5: SEQUENCE DIAGRAM -->
+  <diagram id="page5" name="5. Sequence Diagram">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="900" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title5" value="5. SEQUENCE DIAGRAM — Descending Timeline (Order &amp; Payment Flow)" style="text;html=1;fontSize=18;fontStyle=1;align=left;verticalAlign=middle;fontColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="650" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Lifelines -->
+        <mxCell id="life_user" value=":User" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#f8fafc;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="80" y="80" width="100" height="740" as="geometry" />
+        </mxCell>
+        <mxCell id="life_client" value=":Client App" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#ffffff;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="340" y="80" width="120" height="740" as="geometry" />
+        </mxCell>
+        <mxCell id="life_server" value=":API Server" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#ffffff;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="600" y="80" width="120" height="740" as="geometry" />
+        </mxCell>
+        <mxCell id="life_gateway" value=":Payment Gateway" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#ffffff;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="860" y="80" width="140" height="740" as="geometry" />
+        </mxCell>
+        <mxCell id="life_db" value=":Database" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;fillColor=#ffffff;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="1100" y="80" width="100" height="740" as="geometry" />
+        </mxCell>
+
+        <!-- Messages 1 to 10 -->
+        <mxCell id="seq1" value="1. Click 'Pay Now'" style="endArrow=block;endFill=1;html=1;strokeColor=#334155;fontColor=#0f172a;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="130" y="160" as="sourcePoint" /><mxPoint x="400" y="160" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="seq2" value="2. POST /api/razorpay/create-order (amount, currency)" style="endArrow=block;endFill=1;html=1;strokeColor=#334155;fontColor=#0f172a;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="400" y="210" as="sourcePoint" /><mxPoint x="660" y="210" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="seq3" value="3. createOrder(amount, currency)" style="endArrow=block;endFill=1;html=1;strokeColor=#334155;fontColor=#0f172a;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="660" y="260" as="sourcePoint" /><mxPoint x="930" y="260" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="seq4" value="4. return {order_id, key}" style="endArrow=open;dashed=1;html=1;strokeColor=#334155;fontColor=#0f172a;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="930" y="310" as="sourcePoint" /><mxPoint x="660" y="310" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="seq5" value="5. response {order_id, key}" style="endArrow=open;dashed=1;html=1;strokeColor=#334155;fontColor=#0f172a;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="660" y="360" as="sourcePoint" /><mxPoint x="400" y="360" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="seq6" value="6. Open payment modal (UPI / Card / NetBanking)" style="endArrow=block;endFill=1;html=1;strokeColor=#334155;fontColor=#0f172a;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="400" y="410" as="sourcePoint" /><mxPoint x="130" y="410" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="seq7" value="7. Authenticate &amp; Authorize Payment" style="endArrow=block;endFill=1;html=1;strokeColor=#334155;fontColor=#0f172a;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="130" y="460" as="sourcePoint" /><mxPoint x="400" y="460" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="seq8" value="8. POST /api/razorpay/verify-payment (signature)" style="endArrow=block;endFill=1;html=1;strokeColor=#334155;fontColor=#0f172a;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="400" y="510" as="sourcePoint" /><mxPoint x="660" y="510" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="seq9" value="9. verifySignature(HMAC SHA-256)" style="endArrow=block;endFill=1;html=1;strokeColor=#334155;fontColor=#0f172a;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="660" y="560" as="sourcePoint" /><mxPoint x="930" y="560" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="seq10" value="10. signature valid = true" style="endArrow=open;dashed=1;html=1;strokeColor=#334155;fontColor=#0f172a;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="930" y="600" as="sourcePoint" /><mxPoint x="660" y="600" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="seq11" value="11. saveOrder(orderId, status='Paid')" style="endArrow=block;endFill=1;html=1;strokeColor=#334155;fontColor=#0f172a;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="660" y="650" as="sourcePoint" /><mxPoint x="1150" y="650" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="seq12" value="12. write confirmation OK" style="endArrow=open;dashed=1;html=1;strokeColor=#334155;fontColor=#0f172a;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="1150" y="690" as="sourcePoint" /><mxPoint x="660" y="690" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="seq13" value="13. order confirmed {orderId, receipt}" style="endArrow=open;dashed=1;html=1;strokeColor=#334155;fontColor=#0f172a;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="660" y="730" as="sourcePoint" /><mxPoint x="400" y="730" as="targetPoint" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="seq14" value="14. Display Order Confirmation &amp; Download Invoice" style="endArrow=open;dashed=1;html=1;strokeColor=#334155;fontColor=#0f172a;strokeWidth=1.5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry"><mxPoint x="400" y="770" as="sourcePoint" /><mxPoint x="130" y="770" as="targetPoint" /></mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- PAGE 6: ACTIVITY DIAGRAM -->
+  <diagram id="page6" name="6. Activity Diagram">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="950" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title6" value="6. ACTIVITY DIAGRAM — Checkout Flow with Decision Loops" style="text;html=1;fontSize=18;fontStyle=1;align=left;verticalAlign=middle;fontColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="550" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Initial Node -->
+        <mxCell id="act_start" value="" style="ellipse;fillColor=#334155;strokeColor=#334155;" vertex="1" parent="1">
+          <mxGeometry x="485" y="70" width="30" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Action 1 -->
+        <mxCell id="act1" value="Select Products &amp; Add to Cart" style="rounded=1;whiteSpace=wrap;html=1;arcSize=20;fillColor=#f8fafc;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="400" y="140" width="200" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Action 2 -->
+        <mxCell id="act2" value="Enter Indian Shipping Address" style="rounded=1;whiteSpace=wrap;html=1;arcSize=20;fillColor=#f8fafc;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="400" y="230" width="200" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Decision 1: Payment Method -->
+        <mxCell id="dec1" value="" style="rhombus;whiteSpace=wrap;html=1;fillColor=#e2e8f0;strokeColor=#475569;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="480" y="320" width="40" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Branch A: COD -->
+        <mxCell id="act_cod" value="Save Order with Status 'Pending COD'" style="rounded=1;whiteSpace=wrap;html=1;arcSize=20;fillColor=#ffffff;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="180" y="440" width="200" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Branch B: Online -->
+        <mxCell id="act_online" value="Initiate Online Payment (Razorpay SDK)" style="rounded=1;whiteSpace=wrap;html=1;arcSize=20;fillColor=#ffffff;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="620" y="400" width="220" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="act_verify" value="Verify HMAC SHA-256 Signature" style="rounded=1;whiteSpace=wrap;html=1;arcSize=20;fillColor=#ffffff;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="620" y="490" width="220" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Decision 2: Signature Valid? -->
+        <mxCell id="dec2" value="" style="rhombus;whiteSpace=wrap;html=1;fillColor=#e2e8f0;strokeColor=#475569;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="710" y="580" width="40" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Failure Action (Retry Loop) -->
+        <mxCell id="act_fail" value="Display Payment Failure &amp; Prompt Retry" style="rounded=1;whiteSpace=wrap;html=1;arcSize=20;fillColor=#f8fafc;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="900" y="575" width="210" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Merge / Invoice -->
+        <mxCell id="act_invoice" value="Generate Invoice &amp; Save to Database" style="rounded=1;whiteSpace=wrap;html=1;arcSize=20;fillColor=#ffffff;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="400" y="690" width="200" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="act_notify" value="Send Confirmation Email &amp; UI Receipt" style="rounded=1;whiteSpace=wrap;html=1;arcSize=20;fillColor=#f8fafc;strokeColor=#475569;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="400" y="780" width="200" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- Final Node -->
+        <mxCell id="act_end" value="" style="ellipse;html=1;shape=endState;fillColor=#334155;strokeColor=#334155;" vertex="1" parent="1">
+          <mxGeometry x="485" y="870" width="30" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Connectors -->
+        <mxCell id="ac1" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="act_start" target="act1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ac2" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="act1" target="act2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ac3" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="act2" target="dec1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ac4" value="[Cash on Delivery]" style="endArrow=classic;html=1;exitX=0;exitY=0.5;entryX=0.5;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="dec1" target="act_cod"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="280" y="340" /></Array></mxGeometry></mxCell>
+        <mxCell id="ac5" value="[Online Payment]" style="endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=0.5;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="dec1" target="act_online"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="730" y="340" /></Array></mxGeometry></mxCell>
+        <mxCell id="ac6" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="act_online" target="act_verify"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ac7" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="act_verify" target="dec2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ac8" value="[Valid Signature]" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.7;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="dec2" target="act_invoice"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="730" y="650" /><mxPoint x="540" y="650" /></Array></mxGeometry></mxCell>
+        <mxCell id="ac9" value="[Invalid / Cancelled]" style="endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="dec2" target="act_fail"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ac10" value="[Retry Payment]" style="endArrow=classic;html=1;exitX=0.5;exitY=0;entryX=1;entryY=0.5;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="act_fail" target="dec1"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="1005" y="340" /></Array></mxGeometry></mxCell>
+        <mxCell id="ac11" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.3;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="act_cod" target="act_invoice"><mxGeometry relative="1" as="geometry"><Array as="points"><mxPoint x="280" y="650" /><mxPoint x="460" y="650" /></Array></mxGeometry></mxCell>
+        <mxCell id="ac12" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="act_invoice" target="act_notify"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ac13" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="act_notify" target="act_end"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- PAGE 7: COMPONENT DIAGRAM -->
+  <diagram id="page7" name="7. Component Diagram">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="800" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title7" value="7. COMPONENT DIAGRAM — Architectural Subsystems &amp; Packages" style="text;html=1;fontSize=18;fontStyle=1;align=left;verticalAlign=middle;fontColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="600" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Components -->
+        <mxCell id="comp_client" value="Frontend Client UI&#xa;&lt;&lt;component&gt;&gt;&#xa;React 18 / Tailwind" style="shape=module;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#475569;fontStyle=1;fontColor=#0f172a;size=14;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="60" y="160" width="220" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="comp_backend" value="API Gateway / Backend Server&#xa;&lt;&lt;component&gt;&gt;&#xa;Express.js / Node Runtime" style="shape=module;align=center;verticalAlign=middle;fillColor=#f8fafc;strokeColor=#475569;fontStyle=1;fontColor=#0f172a;size=14;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="380" y="160" width="240" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="comp_auth" value="Authentication Service&#xa;&lt;&lt;component&gt;&gt;&#xa;Firebase Auth" style="shape=module;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#475569;fontStyle=1;fontColor=#0f172a;size=14;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="720" y="80" width="220" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="comp_pay" value="Payment Service&#xa;&lt;&lt;component&gt;&gt;&#xa;Razorpay Node SDK" style="shape=module;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#475569;fontStyle=1;fontColor=#0f172a;size=14;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="720" y="180" width="220" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="comp_ai" value="AI Recommendation Engine&#xa;&lt;&lt;component&gt;&gt;&#xa;Gemini 2.5 API" style="shape=module;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#475569;fontStyle=1;fontColor=#0f172a;size=14;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="720" y="280" width="220" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="comp_notify" value="Notification Service&#xa;&lt;&lt;component&gt;&gt;&#xa;Email &amp; Web Push" style="shape=module;align=center;verticalAlign=middle;fillColor=#ffffff;strokeColor=#475569;fontStyle=1;fontColor=#0f172a;size=14;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="380" y="340" width="240" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="comp_db" value="Database Layer&#xa;&lt;&lt;component&gt;&gt;&#xa;Cloud Firestore" style="shape=module;align=center;verticalAlign=middle;fillColor=#f8fafc;strokeColor=#475569;fontStyle=1;fontColor=#0f172a;size=14;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="720" y="380" width="220" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Dependency Connectors -->
+        <mxCell id="ce1" value="HTTPS / JSON" style="endArrow=open;dashed=1;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="comp_client" target="comp_backend"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ce2" style="endArrow=open;dashed=1;html=1;exitX=1;exitY=0.3;entryX=0;entryY=0.5;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="comp_backend" target="comp_auth"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ce3" style="endArrow=open;dashed=1;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="comp_backend" target="comp_pay"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ce4" style="endArrow=open;dashed=1;html=1;exitX=1;exitY=0.7;entryX=0;entryY=0.5;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="comp_backend" target="comp_ai"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ce5" value="CRUD Operations" style="endArrow=open;dashed=1;html=1;exitX=1;exitY=0.9;entryX=0;entryY=0.5;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="comp_backend" target="comp_db"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="ce6" style="endArrow=open;dashed=1;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;strokeWidth=1.5;" edge="1" parent="1" source="comp_backend" target="comp_notify"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <!-- PAGE 8: DEPLOYMENT DIAGRAM -->
+  <diagram id="page8" name="8. Deployment Diagram">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="800" background="#ffffff" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title8" value="8. DEPLOYMENT DIAGRAM — Physical Nodes &amp; Execution Environment" style="text;html=1;fontSize=18;fontStyle=1;align=left;verticalAlign=middle;fontColor=#0f172a;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="600" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Node: Client Device -->
+        <mxCell id="node_client" value="Client Device&#xa;&lt;&lt;execution environment&gt;&gt;&#xa;Web Browser / Mobile App" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=15;fillColor=#ffffff;strokeColor=#475569;fontStyle=1;align=center;verticalAlign=middle;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="60" y="140" width="220" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- Node: Application Server -->
+        <mxCell id="node_server" value="Application Server&#xa;&lt;&lt;execution environment&gt;&gt;&#xa;Node.js v20+ / Google Cloud Run" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=15;fillColor=#f8fafc;strokeColor=#475569;fontStyle=1;align=center;verticalAlign=middle;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="420" y="140" width="240" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- Node: Database Server -->
+        <mxCell id="node_db" value="Database Server&#xa;&lt;&lt;device&gt;&gt;&#xa;Google Cloud Firestore" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=15;fillColor=#ffffff;strokeColor=#475569;fontStyle=1;align=center;verticalAlign=middle;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="800" y="140" width="220" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- Node: Payment Gateway -->
+        <mxCell id="node_gateway" value="Payment Gateway&#xa;&lt;&lt;third-party service&gt;&gt;&#xa;Razorpay Gateway" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;size=15;fillColor=#ffffff;strokeColor=#475569;fontStyle=1;align=center;verticalAlign=middle;fontColor=#0f172a;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="420" y="380" width="240" height="140" as="geometry" />
+        </mxCell>
+
+        <!-- Network Association Links -->
+        <mxCell id="net1" value="HTTPS / TLS 1.3" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeWidth=1.5;strokeColor=#475569;" edge="1" parent="1" source="node_client" target="node_server"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="net2" value="gRPC / TCP Driver" style="endArrow=none;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeWidth=1.5;strokeColor=#475569;" edge="1" parent="1" source="node_server" target="node_db"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="net3" value="HTTPS / REST API" style="endArrow=none;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeWidth=1.5;strokeColor=#475569;" edge="1" parent="1" source="node_server" target="node_gateway"><mxGeometry relative="1" as="geometry" /></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

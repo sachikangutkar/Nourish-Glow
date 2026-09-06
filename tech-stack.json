@@ -1,0 +1,18 @@
+{
+  "frontend": {
+    "framework": "React 19.0.1",
+    "bundler": "Vite 6.2.3",
+    "styling": "Tailwind CSS 4.1.14",
+    "icons": "Lucide React 0.546.0"
+  },
+  "backend": {
+    "runtime": "Node.js (LTS)",
+    "framework": "Express 4.21.2",
+    "bundler": "esbuild 0.25.0"
+  },
+  "database": {
+    "engine": "Google Cloud Firestore (Firebase SDK 12.16.0)",
+    "authentication": "Firebase Authentication"
+  },
+  "proposed_system": "Nourish Glow is a personalized skincare companion and routine optimizer. It features comprehensive diagnostic parameters, dynamic AM/PM routine planning, ingredient interaction verification, streak metrics, and highly secure cloud synchronization to protect cosmetic diaries."
+}
