@@ -125,6 +125,12 @@ export function formatAuthError(err: any): { code: string; message: string; isEm
   const code = err?.code || "";
   const rawMsg = err?.message || String(err || "");
   
+  if (code === "auth/unauthorized-domain" || rawMsg.includes("unauthorized-domain") || rawMsg.includes("unauthorized domain")) {
+    return {
+      code: "auth/unauthorized-domain",
+      message: "This Vercel domain is not authorized in Firebase Console. Please add your Vercel URL under Firebase Console → Authentication → Settings → Authorized domains."
+    };
+  }
   if (code === "auth/invalid-api-key" || rawMsg.includes("invalid-api-key") || rawMsg.includes("YOUR_API_KEY")) {
     return {
       code: "auth/invalid-api-key",
