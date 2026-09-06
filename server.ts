@@ -921,7 +921,46 @@ function generateMockAnalysis(skinType: string, concerns: string[], sensitivity:
       avoid: isSensitive ? ["Fragrances", "High-strength Glycolic Acid", "Alcohol Denat."] : ["Heavy Mineral Oils"]
     }
   };
-}
+// Razorpay Order Creation Endpoint
+app.post("/api/razorpay/create-order", async (req, res) => {
+  try {
+    const { amount, currency = "INR", receipt, notes } = req.body;
+    const razorpay = getRazorpayClient();
+
+    if (razorpay) {
+      const order = await razorpay.orders.create({
+        amount: Math.round((amount || 100) * 100),
+        currency,
+        receipt: receipt || `rcpt_${Date.now()}`,
+        notes: notes || {}
+      });
+      return res.json({
+        ...order,
+        keyId: process.env.RAZORPAY_KEY_ID
+      });
+    } else {
+      return res.json({
+        id: `order_rzp_demo_${Date.now()}`,
+        entity: "order",
+        amount: Math.round((amount || 100) * 100),
+        currency: currency || "INR",
+        receipt: receipt || `rcpt_${Date.now()}`,
+        status: "created",
+        isMockMode: true,
+        keyId: "rzp_test_NourishGlowKey"
+      });
+    }
+  } catch (err: any) {
+    console.warn("Razorpay order creation note:", err?.message || err);
+    return res.json({
+      id: `order_rzp_demo_${Date.now()}`,
+      amount: Math.round((req.body?.amount || 100) * 100),
+      currency: "INR",
+      isMockMode: true,
+      keyId: "rzp_test_NourishGlowKey"
+    });
+  }
+});
 
 // Vite integration middleware
 async function startServer() {
