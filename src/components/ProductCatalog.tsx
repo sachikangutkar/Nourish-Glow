@@ -68,21 +68,7 @@ const INDIAN_STATES = [
   "Jammu & Kashmir", "Ladakh", "Puducherry", "Chandigarh"
 ];
 
-// Helper to dynamically inject Razorpay JS script
-const loadRazorpayScript = (): Promise<boolean> => {
-  return new Promise((resolve) => {
-    if ((window as any).Razorpay) {
-      resolve(true);
-      return;
-    }
-    const script = document.createElement("script");
-    script.src = "https://checkout.razorpay.com/v1/checkout.js";
-    script.async = true;
-    script.onload = () => resolve(true);
-    script.onerror = () => resolve(false);
-    document.head.appendChild(script);
-  });
-};
+
 
 export default function ProductCatalog({ 
   onAddProductToRoutine,
@@ -134,10 +120,7 @@ export default function ProductCatalog({
   // Completed Order Record
   const [completedOrder, setCompletedOrder] = useState<OrderRecord | null>(null);
 
-  // Load Razorpay script on mount
-  useEffect(() => {
-    loadRazorpayScript();
-  }, []);
+
 
   // Sync user info if available
   useEffect(() => {
@@ -275,11 +258,11 @@ export default function ProductCatalog({
     setCheckoutStep("payment");
   };
 
-  // Razorpay & Order Processing
+  // Demo Payment Simulator — works without Razorpay keys or PAN card
   const handleExecutePayment = async () => {
     setPaymentError(null);
 
-    // If Cash on Delivery, bypass Razorpay modal directly
+    // Cash on Delivery: confirm immediately
     if (paymentMethod === "COD") {
       processFinalOrder({
         method: "COD",
@@ -290,172 +273,39 @@ export default function ProductCatalog({
     }
 
     setIsProcessing(true);
-    setProcessingStatus("Initiating secure Razorpay checkout order...");
 
-    try {
-      let orderData: any;
-      try {
-        const res = await fetch("/api/razorpay/create-order", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            amount: finalCartTotal,
-            currency: "INR",
-            receipt: `rcpt_${Date.now()}`,
-            notes: {
-              customerName: address.fullName,
-              customerPhone: address.mobileNumber,
-              deliveryCity: address.city
-            }
-          })
-        });
+    // Step 1: Authenticating
+    setProcessingStatus("Authenticating secure payment channel...");
+    await new Promise(r => setTimeout(r, 700));
 
-        if (res.ok) {
-          orderData = await res.json();
-        } else {
-          orderData = {
-            id: `order_mock_${Date.now()}`,
-            amount: finalCartTotal * 100,
-            currency: "INR",
-            isMockMode: true,
-            keyId: "rzp_test_NourishGlowKey"
-          };
-        }
-      } catch (fetchErr) {
-        orderData = {
-          id: `order_mock_${Date.now()}`,
-          amount: finalCartTotal * 100,
-          currency: "INR",
-          isMockMode: true,
-          keyId: "rzp_test_NourishGlowKey"
-        };
-      }
+    // Step 2: Processing
+    const methodLabel =
+      paymentMethod === "UPI" ? `UPI · ${upiOption}` :
+      paymentMethod === "NetBanking" ? `Net Banking · ${selectedBank}` :
+      paymentMethod === "Card" ? "Debit / Credit Card" :
+      "Wallet";
+    setProcessingStatus(`Processing ${methodLabel} payment of ₹${finalCartTotal.toFixed(2)}...`);
+    await new Promise(r => setTimeout(r, 900));
 
-      // If server returned mock mode (due to unconfigured or placeholder Razorpay API keys)
-      if (orderData.isMockMode || !orderData.keyId || orderData.keyId.includes("NourishGlow") || orderData.keyId.endsWith("...")) {
-        setProcessingStatus("Authorizing test mode Razorpay transaction...");
-        setTimeout(() => {
-          processFinalOrder({
-            method: paymentMethod,
-            subMethod: paymentMethod === "UPI" ? upiOption : paymentMethod === "NetBanking" ? selectedBank : "Razorpay Online",
-            upiId: customUpiId || undefined,
-            razorpayPaymentId: `pay_rzp_demo_${Date.now()}`,
-            razorpayOrderId: orderData.id,
-            status: "Paid"
-          });
-          setIsProcessing(false);
-        }, 1200);
-        return;
-      }
+    // Step 3: Confirming
+    setProcessingStatus("Confirming order with Nourish Glow servers...");
+    await new Promise(r => setTimeout(r, 600));
 
-      const loaded = await loadRazorpayScript();
+    // Complete the order
+    processFinalOrder({
+      method: paymentMethod,
+      subMethod:
+        paymentMethod === "UPI" ? upiOption :
+        paymentMethod === "NetBanking" ? selectedBank :
+        paymentMethod === "Card" ? "Debit / Credit Card" :
+        "Wallet",
+      upiId: customUpiId || undefined,
+      razorpayPaymentId: `pay_demo_${Date.now()}`,
+      razorpayOrderId: `order_demo_${Date.now()}`,
+      status: "Paid"
+    });
 
-      if (!loaded || !(window as any).Razorpay) {
-        // Fallback for environment when script cannot reach CDN
-        setProcessingStatus("Completing secure payment authorization...");
-        setTimeout(() => {
-          processFinalOrder({
-            method: paymentMethod,
-            subMethod: paymentMethod === "UPI" ? upiOption : paymentMethod === "NetBanking" ? selectedBank : "Card / Wallet",
-            upiId: customUpiId || undefined,
-            razorpayPaymentId: `pay_rzp_mock_${Date.now()}`,
-            razorpayOrderId: orderData.id,
-            status: "Paid"
-          });
-          setIsProcessing(false);
-        }, 1200);
-        return;
-      }
-
-      // 2. Open Razorpay Checkout Modal
-      const options = {
-        key: orderData.keyId,
-        amount: orderData.amount,
-        currency: orderData.currency || "INR",
-        name: "Nourish Glow Skincare",
-        description: `Order of ${cart.length} Skincare Product(s)`,
-        image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&q=80&w=200",
-        order_id: orderData.id,
-        prefill: {
-          name: address.fullName,
-          email: address.email,
-          contact: address.mobileNumber,
-        },
-        notes: {
-          address: `${address.houseBuilding}, ${address.streetArea}, ${address.city}, ${address.state} - ${address.pinCode}`
-        },
-        theme: {
-          color: "#4a5d4e" // Natural Sage Theme Color
-        },
-        handler: async (response: any) => {
-          setProcessingStatus("Verifying payment security signature with server...");
-          
-          try {
-            const verifyRes = await fetch("/api/razorpay/verify-payment", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                razorpay_order_id: response.razorpay_order_id,
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature
-              })
-            });
-
-            const verifyData = await verifyRes.json();
-
-            if (verifyData.verified) {
-              processFinalOrder({
-                method: paymentMethod,
-                subMethod: paymentMethod === "UPI" ? upiOption : paymentMethod === "NetBanking" ? selectedBank : "Razorpay Online",
-                upiId: customUpiId || undefined,
-                razorpayPaymentId: response.razorpay_payment_id,
-                razorpayOrderId: response.razorpay_order_id,
-                razorpaySignature: response.razorpay_signature,
-                status: "Paid"
-              });
-            } else {
-              setPaymentError("Payment verification failed. Please try again.");
-            }
-          } catch (err: any) {
-            console.warn("Verification notice:", err);
-            setPaymentError("Network error verifying payment signature. Please contact support.");
-          } finally {
-            setIsProcessing(false);
-          }
-        },
-        modal: {
-          ondismiss: () => {
-            setIsProcessing(false);
-            setPaymentError("Payment process was cancelled. Your items remain safely in your cart.");
-          }
-        }
-      };
-
-      try {
-        const rzpModal = new (window as any).Razorpay(options);
-        rzpModal.on("payment.failed", (response: any) => {
-          setIsProcessing(false);
-          setPaymentError(`Payment Failed: ${response.error.description || "Transaction declined by bank."}`);
-        });
-        rzpModal.open();
-      } catch (clientErr: any) {
-        console.warn("Razorpay client SDK error, falling back to demo processing:", clientErr);
-        processFinalOrder({
-          method: paymentMethod,
-          subMethod: paymentMethod === "UPI" ? upiOption : paymentMethod === "NetBanking" ? selectedBank : "Razorpay Online",
-          upiId: customUpiId || undefined,
-          razorpayPaymentId: `pay_rzp_demo_${Date.now()}`,
-          razorpayOrderId: orderData.id,
-          status: "Paid"
-        });
-        setIsProcessing(false);
-      }
-
-    } catch (err: any) {
-      console.warn("Razorpay order notice:", err);
-      setIsProcessing(false);
-      setPaymentError(err.message || "Failed to initialize payment gateway.");
-    }
+    setIsProcessing(false);
   };
 
   // Save Final Order to State and Firestore
