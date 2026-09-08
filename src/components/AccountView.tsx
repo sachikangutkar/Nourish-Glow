@@ -344,8 +344,11 @@ export default function AccountView({
     if (nextVal && permissionStatus !== "granted") {
       const p = await requestNotificationPermission();
       setPermissionStatus(p);
+      updated.notificationPermission = p;
       setReminders(prev => ({ ...prev, notificationPermission: p }));
     }
+    // Auto-save immediately so reminder engine picks up the toggle
+    await saveUserReminderSettings(user?.uid, updated);
   };
 
   const handleToggleEveningReminder = async () => {
@@ -355,8 +358,11 @@ export default function AccountView({
     if (nextVal && permissionStatus !== "granted") {
       const p = await requestNotificationPermission();
       setPermissionStatus(p);
+      updated.notificationPermission = p;
       setReminders(prev => ({ ...prev, notificationPermission: p }));
     }
+    // Auto-save immediately so reminder engine picks up the toggle
+    await saveUserReminderSettings(user?.uid, updated);
   };
 
   const handleRequestPermission = async () => {
@@ -2232,7 +2238,14 @@ export default function AccountView({
                     <input 
                       type="time" 
                       value={reminders.morningReminderTime}
-                      onChange={(e) => setReminders(prev => ({ ...prev, morningReminderTime: e.target.value }))}
+                      onChange={async (e) => {
+                        const updated = { ...reminders, morningReminderTime: e.target.value };
+                        setReminders(updated);
+                        // Auto-save immediately so the reminder engine picks up the new time
+                        await saveUserReminderSettings(user?.uid, updated);
+                        setReminderSaveToast({ show: true, msg: `Morning reminder set to ${formatTimeTo12Hour(e.target.value)} ✨`, isError: false });
+                        setTimeout(() => setReminderSaveToast({ show: false, msg: "" }), 3000);
+                      }}
                       disabled={!reminders.morningReminderEnabled}
                       className="w-full px-4 py-2.5 rounded-xl border border-rose-200 bg-[#FCFAF8] text-xs font-mono font-semibold text-slate-800 focus:outline-none focus:border-rose-500 disabled:bg-slate-100 disabled:text-slate-400 cursor-pointer"
                     />
@@ -2297,7 +2310,14 @@ export default function AccountView({
                     <input 
                       type="time" 
                       value={reminders.eveningReminderTime}
-                      onChange={(e) => setReminders(prev => ({ ...prev, eveningReminderTime: e.target.value }))}
+                      onChange={async (e) => {
+                        const updated = { ...reminders, eveningReminderTime: e.target.value };
+                        setReminders(updated);
+                        // Auto-save immediately so the reminder engine picks up the new time
+                        await saveUserReminderSettings(user?.uid, updated);
+                        setReminderSaveToast({ show: true, msg: `Evening reminder set to ${formatTimeTo12Hour(e.target.value)} ✨`, isError: false });
+                        setTimeout(() => setReminderSaveToast({ show: false, msg: "" }), 3000);
+                      }}
                       disabled={!reminders.eveningReminderEnabled}
                       className="w-full px-4 py-2.5 rounded-xl border border-rose-200 bg-[#FCFAF8] text-xs font-mono font-semibold text-slate-800 focus:outline-none focus:border-rose-500 disabled:bg-slate-100 disabled:text-slate-400 cursor-pointer"
                     />

@@ -241,8 +241,8 @@ export async function showSkincareNotification(options: {
         await registration.showNotification(title, {
           body,
           tag,
-          icon: "/vite.svg",
-          badge: "/vite.svg",
+          icon: "/icon-192.svg",
+          badge: "/icon-192.svg",
           data: { url }
         } as any);
         return true;
@@ -257,7 +257,7 @@ export async function showSkincareNotification(options: {
     const notif = new Notification(title, {
       body,
       tag,
-      icon: "/vite.svg"
+      icon: "/icon-192.svg"
     });
 
     notif.onclick = () => {
