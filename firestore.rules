@@ -82,6 +82,11 @@ service cloud.firestore {
       allow read, write: if isOwner(userId);
     }
 
+    // User Settings (e.g. routine reminders)
+    match /users/{userId}/settings/{settingId} {
+      allow read, write: if isOwner(userId);
+    }
+
     // User Payment Cards
     match /users/{userId}/paymentCards/{cardId} {
       allow read: if isOwner(userId);

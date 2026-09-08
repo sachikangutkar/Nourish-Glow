@@ -921,6 +921,8 @@ function generateMockAnalysis(skinType: string, concerns: string[], sensitivity:
       avoid: isSensitive ? ["Fragrances", "High-strength Glycolic Acid", "Alcohol Denat."] : ["Heavy Mineral Oils"]
     }
   };
+}
+
 // Razorpay Order Creation Endpoint
 app.post("/api/razorpay/create-order", async (req, res) => {
   try {

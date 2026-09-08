@@ -244,4 +244,14 @@ export interface ChatMessage {
   prescriptionNote?: string;
 }
 
+// Skincare Routine Reminder & Notification Settings
+export interface RoutineReminderSettings {
+  morningReminderEnabled: boolean;
+  morningReminderTime: string; // 24-hour format "HH:MM" e.g. "08:00"
+  eveningReminderEnabled: boolean;
+  eveningReminderTime: string; // 24-hour format "HH:MM" e.g. "21:00"
+  notificationPermission: "default" | "granted" | "denied" | "unsupported";
+  updatedAt?: string;
+}
+
 

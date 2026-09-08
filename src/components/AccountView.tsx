@@ -42,11 +42,24 @@ import {
   FileCheck2,
   X,
   ArrowLeft,
-  LogIn
+  LogIn,
+  BellRing,
+  BellOff,
+  CheckCircle2
 } from "lucide-react";
-import { PaymentCard } from "../types";
+import { RoutineStep, DailyLog, PaymentCard, RoutineReminderSettings } from "../types";
 import { formatINR } from "../lib/formatters";
 import { formatAuthError } from "../lib/firebase";
+import { 
+  loadUserReminderSettings, 
+  saveUserReminderSettings, 
+  requestNotificationPermission, 
+  sendTestNotification, 
+  formatTimeTo12Hour,
+  getNotificationPermissionStatus,
+  isNotificationSupported,
+  DEFAULT_REMINDER_SETTINGS
+} from "../lib/reminderService";
 
 // Assets
 import sakuraCleanserImg from "../assets/images/sakura_cleanser_1788363415868.jpg";
@@ -66,16 +79,16 @@ import drPriyaImg from "../assets/images/dr_priya_nair_1788366830734.jpg";
 
 interface AccountViewProps {
   user: { displayName: string; email: string; photoURL?: string; uid: string } | null;
-  isCloudSynced: boolean;
-  onLogin: () => void;
-  onLogout: () => void;
-  onCustomUserLogin: (name: string, email: string) => void;
-  onEmailSignUp?: (email: string, pass: string, name: string) => Promise<void>;
-  onEmailSignIn?: (email: string, pass: string) => Promise<void>;
+  isCloudSynced?: boolean;
+  onLogin?: () => void;
+  onLogout?: () => void;
+  onCustomUserLogin?: (email: string, pass: string) => void;
+  onEmailSignUp?: (email: string, pass: string, name: string) => Promise<any>;
+  onEmailSignIn?: (email: string, pass: string) => Promise<any>;
   onPasswordReset?: (email: string) => Promise<void>;
-  amRoutine: any[];
-  pmRoutine: any[];
-  logs: any[];
+  amRoutine?: RoutineStep[];
+  pmRoutine?: RoutineStep[];
+  logs?: DailyLog[];
   paymentCards: PaymentCard[];
   onAddPaymentCard: (card: Omit<PaymentCard, "id">) => void;
   onDeletePaymentCard: (id: string) => void;
@@ -88,6 +101,7 @@ export type MenuSection =
   | "profile"
   | "skin-profile"
   | "routine"
+  | "routine-reminders"
   | "progress"
   | "orders"
   | "saved"
@@ -186,6 +200,13 @@ export default function AccountView({
     offers: true
   });
 
+  // Skincare Routine Reminders State (Strict User Isolation)
+  const [reminders, setReminders] = useState<RoutineReminderSettings>(DEFAULT_REMINDER_SETTINGS);
+  const [reminderSaving, setReminderSaving] = useState(false);
+  const [reminderSaveToast, setReminderSaveToast] = useState<{ show: boolean; msg: string; isError?: boolean }>({ show: false, msg: "" });
+  const [testNotificationFeedback, setTestNotificationFeedback] = useState<{ show: boolean; msg: string; isError?: boolean }>({ show: false, msg: "" });
+  const [permissionStatus, setPermissionStatus] = useState<"granted" | "denied" | "default" | "unsupported">(getNotificationPermissionStatus());
+
   // 10. Settings State
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [showPasswordChangeModal, setShowPasswordChangeModal] = useState(false);
@@ -197,6 +218,28 @@ export default function AccountView({
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
   // Synchronize with user-scoped LocalStorage on mount or when user changes
+  useEffect(() => {
+    // Always load user-isolated reminder settings
+    loadUserReminderSettings(user?.uid).then((settings) => {
+      setReminders(settings);
+      setPermissionStatus(getNotificationPermissionStatus());
+    });
+
+    const handleSettingsUpdated = (e: any) => {
+      if (e.detail) {
+        setReminders(e.detail);
+      } else {
+        loadUserReminderSettings(user?.uid).then(setReminders);
+      }
+      setPermissionStatus(getNotificationPermissionStatus());
+    };
+
+    window.addEventListener("ng-reminder-settings-updated", handleSettingsUpdated);
+    return () => {
+      window.removeEventListener("ng-reminder-settings-updated", handleSettingsUpdated);
+    };
+  }, [user?.uid]);
+
   useEffect(() => {
     if (!user || !user.uid) {
       setProfileName("");
@@ -292,6 +335,89 @@ export default function AccountView({
       console.warn("Could not load addresses", e);
     }
   }, [user?.uid, user?.displayName, user?.email]);
+
+  // Skincare Routine Reminder Actions
+  const handleToggleMorningReminder = async () => {
+    const nextVal = !reminders.morningReminderEnabled;
+    const updated = { ...reminders, morningReminderEnabled: nextVal };
+    setReminders(updated);
+    if (nextVal && permissionStatus !== "granted") {
+      const p = await requestNotificationPermission();
+      setPermissionStatus(p);
+      setReminders(prev => ({ ...prev, notificationPermission: p }));
+    }
+  };
+
+  const handleToggleEveningReminder = async () => {
+    const nextVal = !reminders.eveningReminderEnabled;
+    const updated = { ...reminders, eveningReminderEnabled: nextVal };
+    setReminders(updated);
+    if (nextVal && permissionStatus !== "granted") {
+      const p = await requestNotificationPermission();
+      setPermissionStatus(p);
+      setReminders(prev => ({ ...prev, notificationPermission: p }));
+    }
+  };
+
+  const handleRequestPermission = async () => {
+    const p = await requestNotificationPermission();
+    setPermissionStatus(p);
+    setReminders(prev => ({ ...prev, notificationPermission: p }));
+    if (p === "granted") {
+      setTestNotificationFeedback({
+        show: true,
+        msg: "Notifications enabled! 🔔 Your browser will remind you at your scheduled routine times.",
+        isError: false
+      });
+      setTimeout(() => setTestNotificationFeedback({ show: false, msg: "" }), 5000);
+    } else if (p === "denied") {
+      setTestNotificationFeedback({
+        show: true,
+        msg: "Notifications are blocked. Please enable notifications from your browser site settings.",
+        isError: true
+      });
+    }
+  };
+
+  const handleSaveReminders = async () => {
+    setReminderSaving(true);
+    try {
+      const res = await saveUserReminderSettings(user?.uid, reminders);
+      if (res.success) {
+        setReminderSaveToast({
+          show: true,
+          msg: "Routine reminder settings saved successfully! ✨",
+          isError: false
+        });
+      } else {
+        setReminderSaveToast({
+          show: true,
+          msg: res.error || "Failed to save settings.",
+          isError: true
+        });
+      }
+    } catch (err: any) {
+      setReminderSaveToast({
+        show: true,
+        msg: err?.message || "An error occurred while saving reminder settings.",
+        isError: true
+      });
+    } finally {
+      setReminderSaving(false);
+      setTimeout(() => setReminderSaveToast({ show: false, msg: "" }), 4000);
+    }
+  };
+
+  const handleSendTestNotification = async () => {
+    const res = await sendTestNotification();
+    setPermissionStatus(getNotificationPermissionStatus());
+    setTestNotificationFeedback({
+      show: true,
+      msg: res.message,
+      isError: !res.sent
+    });
+    setTimeout(() => setTestNotificationFeedback({ show: false, msg: "" }), 6000);
+  };
 
   // Profile actions
   const handleSaveProfile = (e: React.FormEvent) => {
@@ -693,6 +819,7 @@ export default function AccountView({
     { id: "profile", label: "Profile", icon: <User className="w-4 h-4" /> },
     { id: "skin-profile", label: "Skin Profile", icon: <Sparkles className="w-4 h-4" /> },
     { id: "routine", label: "My Routine", icon: <Sun className="w-4 h-4" /> },
+    { id: "routine-reminders", label: "Routine Reminders", icon: <BellRing className="w-4 h-4" /> },
     { id: "progress", label: "Skin Progress", icon: <TrendingUp className="w-4 h-4" /> },
     { id: "orders", label: "My Orders", icon: <ShoppingBag className="w-4 h-4" /> },
     { id: "saved", label: "Saved Products", icon: <Heart className="w-4 h-4" /> },
@@ -1199,6 +1326,40 @@ export default function AccountView({
                     </>
                   )}
                 </div>
+              </div>
+
+              {/* Routine Reminders Status Callout */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-2xl bg-[#FCFAF8] border border-rose-100/80 gap-3">
+                <div className="flex items-center gap-3">
+                  <span className="w-9 h-9 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0 border border-rose-200 shadow-3xs">
+                    <BellRing className="w-4 h-4" />
+                  </span>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <p className="text-xs font-bold text-slate-800">Skincare Routine Reminders</p>
+                      <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full border ${
+                        reminders.morningReminderEnabled || reminders.eveningReminderEnabled
+                          ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                          : "bg-slate-100 text-slate-500 border-slate-200"
+                      }`}>
+                        {reminders.morningReminderEnabled || reminders.eveningReminderEnabled ? "Active" : "Disabled"}
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-slate-500 mt-0.5">
+                      {reminders.morningReminderEnabled ? `🌞 Morning: ${formatTimeTo12Hour(reminders.morningReminderTime)}` : "🌞 Morning: Off"}
+                      {" • "}
+                      {reminders.eveningReminderEnabled ? `🌙 Evening: ${formatTimeTo12Hour(reminders.eveningReminderTime)}` : "🌙 Evening: Off"}
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => setActiveSection("routine-reminders")}
+                  className="px-3.5 py-1.5 rounded-xl bg-white hover:bg-rose-50 border border-rose-200 text-rose-600 text-xs font-semibold cursor-pointer shrink-0 transition-all shadow-3xs self-start sm:self-auto"
+                >
+                  Configure Reminders →
+                </button>
               </div>
 
               {/* Morning Routine */}
@@ -1772,20 +1933,62 @@ export default function AccountView({
                   </label>
                 </div>
 
-                <div className="flex items-center justify-between p-4 rounded-2xl bg-[#FCFAF8] border border-rose-100/70">
-                  <div>
-                    <h4 className="text-xs font-semibold text-slate-800">Skincare Routine Reminders</h4>
-                    <p className="text-[11px] text-slate-500 mt-0.5">Daily morning and evening reminders for your skincare routine.</p>
+                <div className="p-4 rounded-2xl bg-[#FCFAF8] border border-rose-100/70 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h4 className="text-xs font-semibold text-slate-800">Skincare Routine Reminders</h4>
+                        <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full ${
+                          reminders.morningReminderEnabled || reminders.eveningReminderEnabled
+                            ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                            : "bg-slate-100 text-slate-500 border border-slate-200"
+                        }`}>
+                          {reminders.morningReminderEnabled || reminders.eveningReminderEnabled ? "Active" : "Off"}
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-slate-500 mt-0.5">Daily morning and evening alerts for your skincare routine.</p>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input 
+                        type="checkbox" 
+                        checked={reminders.morningReminderEnabled || reminders.eveningReminderEnabled}
+                        onChange={async () => {
+                          const nextVal = !(reminders.morningReminderEnabled || reminders.eveningReminderEnabled);
+                          const updated = { 
+                            ...reminders, 
+                            morningReminderEnabled: nextVal, 
+                            eveningReminderEnabled: nextVal 
+                          };
+                          setReminders(updated);
+                          if (nextVal && permissionStatus !== "granted") {
+                            const p = await requestNotificationPermission();
+                            setPermissionStatus(p);
+                            setReminders(prev => ({ ...prev, notificationPermission: p }));
+                          }
+                          await saveUserReminderSettings(user?.uid, updated);
+                        }}
+                        className="sr-only peer" 
+                      />
+                      <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-rose-500" />
+                    </label>
                   </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input 
-                      type="checkbox" 
-                      checked={notifications.routineReminders}
-                      onChange={() => setNotifications(prev => ({ ...prev, routineReminders: !prev.routineReminders }))}
-                      className="sr-only peer" 
-                    />
-                    <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-rose-500" />
-                  </label>
+
+                  <div className="pt-2.5 border-t border-rose-100/60 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+                    <div className="flex items-center gap-3 text-[11px] text-slate-600">
+                      <span>🌞 AM: <strong className="font-mono text-slate-800">{reminders.morningReminderEnabled ? formatTimeTo12Hour(reminders.morningReminderTime) : "Disabled"}</strong></span>
+                      <span>•</span>
+                      <span>🌙 PM: <strong className="font-mono text-slate-800">{reminders.eveningReminderEnabled ? formatTimeTo12Hour(reminders.eveningReminderTime) : "Disabled"}</strong></span>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => setActiveSection("routine-reminders")}
+                      className="text-xs font-semibold text-rose-600 hover:text-rose-700 hover:underline inline-flex items-center gap-1 cursor-pointer self-start sm:self-auto"
+                    >
+                      <span>Configure Times & Test Alerts</span>
+                      <ChevronRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
 
                 <div className="flex items-center justify-between p-4 rounded-2xl bg-[#FCFAF8] border border-rose-100/70">
@@ -1818,6 +2021,355 @@ export default function AccountView({
                     />
                     <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-rose-500" />
                   </label>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ========================================================================= */}
+          {/* SECTION: ROUTINE REMINDERS & NOTIFICATIONS */}
+          {/* ========================================================================= */}
+          {activeSection === "routine-reminders" && (
+            <div className="bg-white border border-rose-100/80 rounded-3xl p-6 sm:p-8 shadow-3xs space-y-6 animate-fade-in">
+              {/* Header */}
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-rose-100/60 pb-5">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="p-1.5 bg-rose-50 rounded-lg text-rose-600 border border-rose-100">
+                      <BellRing className="w-4 h-4" />
+                    </span>
+                    <h2 className="text-xl font-serif font-semibold text-slate-800">Routine Reminders</h2>
+                    <span className="text-[10px] font-mono font-bold bg-rose-50 text-rose-700 border border-rose-200 px-2 py-0.5 rounded-full">
+                      Circadian Alerts
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    Schedule personalized browser notifications for your morning and evening skincare routines.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <span className="text-[11px] font-medium text-slate-500 bg-slate-50 border border-slate-200/80 px-3 py-1 rounded-xl">
+                    {user?.displayName ? `${user.displayName}'s Settings` : "User-Isolated Storage"}
+                  </span>
+                </div>
+              </div>
+
+              {/* Status & Feedback Toasts */}
+              {reminderSaveToast.show && (
+                <div className={`p-4 rounded-2xl border flex items-center gap-2.5 text-xs animate-fade-in ${
+                  reminderSaveToast.isError 
+                    ? "bg-rose-50 border-rose-200 text-rose-800" 
+                    : "bg-emerald-50 border-emerald-200 text-emerald-800"
+                }`}>
+                  {reminderSaveToast.isError ? (
+                    <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+                  ) : (
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                  )}
+                  <span className="font-medium">{reminderSaveToast.msg}</span>
+                </div>
+              )}
+
+              {testNotificationFeedback.show && (
+                <div className={`p-4 rounded-2xl border flex items-center gap-2.5 text-xs animate-fade-in ${
+                  testNotificationFeedback.isError 
+                    ? "bg-amber-50 border-amber-200 text-amber-900" 
+                    : "bg-purple-50 border-purple-200 text-purple-900"
+                }`}>
+                  {testNotificationFeedback.isError ? (
+                    <AlertCircle className="w-4 h-4 text-amber-600 shrink-0" />
+                  ) : (
+                    <Sparkles className="w-4 h-4 text-purple-600 shrink-0" />
+                  )}
+                  <span>{testNotificationFeedback.msg}</span>
+                </div>
+              )}
+
+              {/* Overall Status Banner (Requirement 6) */}
+              <div className="rounded-2xl bg-gradient-to-r from-rose-50/80 via-pink-50/60 to-amber-50/70 border border-rose-100 p-4 sm:p-5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="space-y-1">
+                    <p className="text-[11px] font-bold uppercase tracking-wider text-rose-600 font-mono">Current Reminder Status</p>
+                    <div className="flex flex-wrap items-center gap-3 text-xs font-semibold text-slate-800 pt-0.5">
+                      {/* Morning Indicator */}
+                      <div className="flex items-center gap-2 bg-white/80 backdrop-blur-xs px-3 py-1.5 rounded-xl border border-rose-100 shadow-3xs">
+                        <span>🔔</span>
+                        <span>Morning Reminder:</span>
+                        {reminders.morningReminderEnabled ? (
+                          <span className="text-emerald-600 font-mono font-bold">Enabled — {formatTimeTo12Hour(reminders.morningReminderTime)}</span>
+                        ) : (
+                          <span className="text-slate-400 font-mono">Disabled</span>
+                        )}
+                      </div>
+
+                      {/* Evening Indicator */}
+                      <div className="flex items-center gap-2 bg-white/80 backdrop-blur-xs px-3 py-1.5 rounded-xl border border-rose-100 shadow-3xs">
+                        <span>🌙</span>
+                        <span>Evening Reminder:</span>
+                        {reminders.eveningReminderEnabled ? (
+                          <span className="text-indigo-600 font-mono font-bold">Enabled — {formatTimeTo12Hour(reminders.eveningReminderTime)}</span>
+                        ) : (
+                          <span className="text-slate-400 font-mono">Disabled</span>
+                        )}
+                      </div>
+
+                      {!reminders.morningReminderEnabled && !reminders.eveningReminderEnabled && (
+                        <span className="text-xs text-slate-500 italic flex items-center gap-1">
+                          <span>🔕</span> Reminders Disabled
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={handleSendTestNotification}
+                    className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-white hover:bg-rose-50 border border-rose-200 text-slate-800 hover:text-rose-700 text-xs font-semibold transition-all shadow-3xs cursor-pointer shrink-0 self-start sm:self-center"
+                    title="Test immediate notification delivery in your browser"
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-rose-500" />
+                    <span>Send Test Notification</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Notification Permission Status Card (Requirement 4 & 11) */}
+              <div className="p-4 sm:p-5 rounded-2xl bg-[#FCFAF8] border border-rose-100/80 space-y-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="flex items-start gap-3">
+                    <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 mt-0.5 ${
+                      permissionStatus === "granted"
+                        ? "bg-emerald-100 text-emerald-700"
+                        : permissionStatus === "denied"
+                        ? "bg-rose-100 text-rose-700"
+                        : "bg-amber-100 text-amber-700"
+                    }`}>
+                      {permissionStatus === "granted" ? (
+                        <Check className="w-4 h-4" />
+                      ) : permissionStatus === "denied" ? (
+                        <BellOff className="w-4 h-4" />
+                      ) : (
+                        <Bell className="w-4 h-4" />
+                      )}
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h4 className="text-xs font-semibold text-slate-800">Browser Notification Permission</h4>
+                        <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full border ${
+                          permissionStatus === "granted"
+                            ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                            : permissionStatus === "denied"
+                            ? "bg-rose-50 text-rose-700 border-rose-200"
+                            : "bg-amber-50 text-amber-800 border-amber-200"
+                        }`}>
+                          {permissionStatus === "granted" 
+                            ? "Notifications enabled" 
+                            : permissionStatus === "denied" 
+                            ? "Permission blocked" 
+                            : "Permission required"}
+                        </span>
+                      </div>
+                      <p className="text-[11px] text-slate-500 mt-1 leading-relaxed">
+                        {permissionStatus === "granted" && "Your browser is fully authorized to display scheduled routine alerts. Clicking an alert will open your skincare routine directly."}
+                        {permissionStatus === "denied" && "Notifications are blocked. Please enable notifications from your browser settings (click the lock/controls icon next to the address bar)."}
+                        {permissionStatus === "default" && "Browser permission has not yet been granted. Click below to authorize alerts so you never miss a step."}
+                        {permissionStatus === "unsupported" && "Notifications are not supported by this browser. Please use a supported browser and allow notifications."}
+                      </p>
+                    </div>
+                  </div>
+
+                  {permissionStatus !== "granted" && permissionStatus !== "unsupported" && (
+                    <button
+                      type="button"
+                      onClick={handleRequestPermission}
+                      className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold transition-all cursor-pointer shadow-3xs self-start sm:self-center shrink-0"
+                    >
+                      Enable Notifications
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Reminder Controls Grid: Morning & Evening */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                {/* 1. Morning Routine Card */}
+                <div className={`p-5 rounded-2xl border transition-all space-y-4 ${
+                  reminders.morningReminderEnabled 
+                    ? "bg-white border-rose-200 shadow-3xs" 
+                    : "bg-[#FAF8F6] border-slate-200/80 opacity-80"
+                }`}>
+                  <div className="flex items-center justify-between border-b border-rose-100/70 pb-3">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold">
+                        <Sun className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h3 className="text-xs font-bold text-slate-800">Morning Routine Reminder</h3>
+                        <p className="text-[10px] text-slate-500">Wake up & protect skin barrier</p>
+                      </div>
+                    </div>
+
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input 
+                        type="checkbox" 
+                        checked={reminders.morningReminderEnabled}
+                        onChange={handleToggleMorningReminder}
+                        className="sr-only peer" 
+                      />
+                      <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-rose-500" />
+                    </label>
+                  </div>
+
+                  {/* Morning Time Picker */}
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-slate-700 flex items-center justify-between">
+                      <span>Preferred Morning Time</span>
+                      <span className="font-mono text-[11px] text-rose-600 font-bold">
+                        {formatTimeTo12Hour(reminders.morningReminderTime)}
+                      </span>
+                    </label>
+                    <input 
+                      type="time" 
+                      value={reminders.morningReminderTime}
+                      onChange={(e) => setReminders(prev => ({ ...prev, morningReminderTime: e.target.value }))}
+                      disabled={!reminders.morningReminderEnabled}
+                      className="w-full px-4 py-2.5 rounded-xl border border-rose-200 bg-[#FCFAF8] text-xs font-mono font-semibold text-slate-800 focus:outline-none focus:border-rose-500 disabled:bg-slate-100 disabled:text-slate-400 cursor-pointer"
+                    />
+                  </div>
+
+                  {/* Connected AM Routine Steps */}
+                  <div className="p-3 bg-amber-50/50 rounded-xl border border-amber-100 text-[11px] space-y-1.5">
+                    <p className="font-semibold text-amber-900 flex items-center gap-1.5">
+                      <span>🧴</span>
+                      <span>Connected AM Routine:</span>
+                      <span className="font-normal text-amber-800">
+                        {amRoutine && amRoutine.length > 0 ? `${amRoutine.length} steps configured` : "Default morning essentials"}
+                      </span>
+                    </p>
+                    <p className="text-[10px] text-slate-600 italic">
+                      {amRoutine && amRoutine.length > 0
+                        ? amRoutine.map(s => s.name).slice(0, 3).join(" • ") + (amRoutine.length > 3 ? "..." : "")
+                        : "Sakura Hydrating Cleanser • Rice Water Toner • SPF 50"}
+                    </p>
+                    <div className="pt-1.5 border-t border-amber-100 text-[10px] text-slate-500">
+                      <strong>Notification Message:</strong> "Good morning! 🌞 It's time for your Nourish Glow morning skincare routine."
+                    </div>
+                  </div>
+                </div>
+
+                {/* 2. Evening Routine Card */}
+                <div className={`p-5 rounded-2xl border transition-all space-y-4 ${
+                  reminders.eveningReminderEnabled 
+                    ? "bg-white border-rose-200 shadow-3xs" 
+                    : "bg-[#FAF8F6] border-slate-200/80 opacity-80"
+                }`}>
+                  <div className="flex items-center justify-between border-b border-rose-100/70 pb-3">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold">
+                        <Moon className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <h3 className="text-xs font-bold text-slate-800">Evening Routine Reminder</h3>
+                        <p className="text-[10px] text-slate-500">Night repair & deep hydration</p>
+                      </div>
+                    </div>
+
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input 
+                        type="checkbox" 
+                        checked={reminders.eveningReminderEnabled}
+                        onChange={handleToggleEveningReminder}
+                        className="sr-only peer" 
+                      />
+                      <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-rose-500" />
+                    </label>
+                  </div>
+
+                  {/* Evening Time Picker */}
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-slate-700 flex items-center justify-between">
+                      <span>Preferred Evening Time</span>
+                      <span className="font-mono text-[11px] text-indigo-600 font-bold">
+                        {formatTimeTo12Hour(reminders.eveningReminderTime)}
+                      </span>
+                    </label>
+                    <input 
+                      type="time" 
+                      value={reminders.eveningReminderTime}
+                      onChange={(e) => setReminders(prev => ({ ...prev, eveningReminderTime: e.target.value }))}
+                      disabled={!reminders.eveningReminderEnabled}
+                      className="w-full px-4 py-2.5 rounded-xl border border-rose-200 bg-[#FCFAF8] text-xs font-mono font-semibold text-slate-800 focus:outline-none focus:border-rose-500 disabled:bg-slate-100 disabled:text-slate-400 cursor-pointer"
+                    />
+                  </div>
+
+                  {/* Connected PM Routine Steps */}
+                  <div className="p-3 bg-indigo-50/50 rounded-xl border border-indigo-100 text-[11px] space-y-1.5">
+                    <p className="font-semibold text-indigo-900 flex items-center gap-1.5">
+                      <span>🌙</span>
+                      <span>Connected PM Routine:</span>
+                      <span className="font-normal text-indigo-800">
+                        {pmRoutine && pmRoutine.length > 0 ? `${pmRoutine.length} steps configured` : "Default evening repair"}
+                      </span>
+                    </p>
+                    <p className="text-[10px] text-slate-600 italic">
+                      {pmRoutine && pmRoutine.length > 0
+                        ? pmRoutine.map(s => s.name).slice(0, 3).join(" • ") + (pmRoutine.length > 3 ? "..." : "")
+                        : "Sakura Hydrating Cleanser • Ceramide Moisturizer"}
+                    </p>
+                    <div className="pt-1.5 border-t border-indigo-100 text-[10px] text-slate-500">
+                      <strong>Notification Message:</strong> "Good evening! 🌙 It's time for your Nourish Glow evening skincare routine."
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons & Save */}
+              <div className="pt-4 border-t border-rose-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div className="flex items-center gap-2 text-xs text-slate-500">
+                  <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" />
+                  <span>Settings belong strictly to your logged-in profile.</span>
+                </div>
+
+                <div className="flex items-center gap-3 w-full sm:w-auto">
+                  <button
+                    type="button"
+                    onClick={handleSendTestNotification}
+                    className="flex-1 sm:flex-initial px-4 py-2.5 bg-white hover:bg-rose-50 border border-rose-200 text-slate-700 hover:text-rose-600 rounded-xl text-xs font-semibold transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-3xs"
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-rose-500" />
+                    <span>Send Test Notification</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleSaveReminders}
+                    disabled={reminderSaving}
+                    className="flex-1 sm:flex-initial px-6 py-2.5 bg-rose-500 hover:bg-rose-600 disabled:bg-rose-300 text-white rounded-xl text-xs font-semibold shadow-3xs transition-all cursor-pointer flex items-center justify-center gap-2"
+                  >
+                    {reminderSaving ? (
+                      <>
+                        <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                        <span>Saving...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Check className="w-3.5 h-3.5" />
+                        <span>Save Reminder Settings</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Browser Architecture Note (Requirement 10) */}
+              <div className="p-4 rounded-2xl bg-amber-50/40 border border-amber-200/60 flex items-start gap-3 text-[11px] text-amber-900 leading-relaxed">
+                <Clock className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-semibold">Browser Delivery Note:</p>
+                  <p className="text-slate-600 mt-0.5">
+                    Local web notifications run reliably while Nourish Glow is open in your browser or running in a background tab. To ensure you receive timely notifications, keep a Nourish Glow browser tab open or install it to your device home screen.
+                  </p>
                 </div>
               </div>
             </div>

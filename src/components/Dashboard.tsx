@@ -28,8 +28,8 @@ import {
   ShieldCheck
 } from "lucide-react";
 import { RoutineStep, DailyLog, SkinAnalysis, VisionScanResult } from "../types";
-import { CURATED_PRODUCTS } from "../data/skincareData";
 import { formatINR, calculateDiscountPercent } from "../lib/formatters";
+import { CURATED_PRODUCTS } from "../data/skincareData";
 
 interface DashboardProps {
   user: { displayName: string; email: string; photoURL?: string; uid: string } | null;
@@ -168,106 +168,7 @@ export default function Dashboard({
     setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
   };
 
-  // AM/PM Custom Reminders state
-  const [amEnabled, setAmEnabled] = useState<boolean>(() => {
-    return localStorage.getItem("nourish_glow_am_enabled") !== "false";
-  });
-  const [amTime, setAmTime] = useState<string>(() => {
-    return localStorage.getItem("nourish_glow_am_time") || "08:00";
-  });
-  const [pmEnabled, setPmEnabled] = useState<boolean>(() => {
-    return localStorage.getItem("nourish_glow_pm_enabled") !== "false";
-  });
-  const [pmTime, setPmTime] = useState<string>(() => {
-    return localStorage.getItem("nourish_glow_pm_time") || "21:00";
-  });
-  const [lastNotificationKey, setLastNotificationKey] = useState<string>("");
-
-  // Persist Reminder settings
-  useEffect(() => {
-    localStorage.setItem("nourish_glow_am_enabled", String(amEnabled));
-  }, [amEnabled]);
-
-  useEffect(() => {
-    localStorage.setItem("nourish_glow_am_time", amTime);
-  }, [amTime]);
-
-  useEffect(() => {
-    localStorage.setItem("nourish_glow_pm_enabled", String(pmEnabled));
-  }, [pmEnabled]);
-
-  useEffect(() => {
-    localStorage.setItem("nourish_glow_pm_time", pmTime);
-  }, [pmTime]);
-
-  // Push notification timer loop checking local current system time
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const now = new Date();
-      const currentHour = String(now.getHours()).padStart(2, '0');
-      const currentMin = String(now.getMinutes()).padStart(2, '0');
-      const timeString = `${currentHour}:${currentMin}`;
-      const todayDate = now.toDateString();
-
-      // Check AM Reminder
-      if (amEnabled && amTime === timeString) {
-        const notificationKey = `am-${todayDate}`;
-        if (lastNotificationKey !== notificationKey) {
-          setLastNotificationKey(notificationKey);
-          if (typeof Notification !== "undefined" && Notification.permission === "granted") {
-            new Notification("AM Skincare Time! 🌸", {
-              body: "Time for your Nourish Glow morning routine to protect and prep your skin.",
-              tag: "am-reminder"
-            });
-          }
-        }
-      }
-
-      // Check PM Reminder
-      if (pmEnabled && pmTime === timeString) {
-        const notificationKey = `pm-${todayDate}`;
-        if (lastNotificationKey !== notificationKey) {
-          setLastNotificationKey(notificationKey);
-          if (typeof Notification !== "undefined" && Notification.permission === "granted") {
-            new Notification("PM Skincare Time! 🌙", {
-              body: "Time for your Nourish Glow evening routine to hydrate and repair your skin.",
-              tag: "pm-reminder"
-            });
-          }
-        }
-      }
-    }, 15000); // Check every 15 seconds for highest precision on the target minute
-
-    return () => clearInterval(interval);
-  }, [amEnabled, amTime, pmEnabled, pmTime, lastNotificationKey]);
-
-  // Test push notification trigger
-  const triggerTestNotification = () => {
-    if (!("Notification" in window)) {
-      alert("Browser notifications are not supported in your browser.");
-      return;
-    }
-
-    if (Notification.permission !== "granted") {
-      Notification.requestPermission().then((permission) => {
-        setNotificationPermission(permission);
-        if (permission === "granted") {
-          sendTest();
-        } else {
-          alert("Please enable notification permissions to test.");
-        }
-      });
-    } else {
-      sendTest();
-    }
-
-    function sendTest() {
-      new Notification("Nourish Glow ✨", {
-        body: "Success! Your browser reminders are active. Keep glowing!",
-        tag: "test-reminder"
-      });
-    }
-  };
+  // Note: Skincare routine reminders and notifications are managed globally by RoutineReminderManager in App.tsx
 
   // Streak preservation calculation
   const getLastLogTime = () => {

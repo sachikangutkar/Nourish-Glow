@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { 
   Sun, 
   Moon, 
@@ -15,10 +15,24 @@ import {
   Info,
   Layers,
   ArrowRight,
-  Package
+  Package,
+  Bell,
+  BellRing,
+  BellOff,
+  Clock,
+  X
 } from "lucide-react";
-import { RoutineStep, SkincareProduct } from "../types";
+import { RoutineStep, SkincareProduct, RoutineReminderSettings } from "../types";
 import { CURATED_PRODUCTS } from "../data/skincareData";
+import { 
+  loadUserReminderSettings, 
+  saveUserReminderSettings, 
+  sendTestNotification, 
+  requestNotificationPermission, 
+  formatTimeTo12Hour, 
+  getNotificationPermissionStatus,
+  DEFAULT_REMINDER_SETTINGS 
+} from "../lib/reminderService";
 
 interface RoutinePlannerProps {
   amRoutine: RoutineStep[];
@@ -27,6 +41,7 @@ interface RoutinePlannerProps {
   onRemoveStep: (regime: "AM" | "PM", index: number) => void;
   onToggleComplete: (regime: "AM" | "PM", index: number) => void;
   onNavigate?: (tab: string) => void;
+  user?: any;
 }
 
 // Additional popular products for the library (Minimalist, The Ordinary, CeraVe, Cosrx, etc.)
@@ -155,12 +170,83 @@ export default function RoutinePlanner({
   onAddStep,
   onRemoveStep,
   onToggleComplete,
-  onNavigate
+  onNavigate,
+  user
 }: RoutinePlannerProps) {
   const [activeRegime, setActiveRegime] = useState<"AM" | "PM">("AM");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [addedToast, setAddedToast] = useState<string | null>(null);
+
+  // Routine Reminders State & Modal
+  const [showReminderModal, setShowReminderModal] = useState(false);
+  const [reminderSettings, setReminderSettings] = useState<RoutineReminderSettings>(DEFAULT_REMINDER_SETTINGS);
+  const [reminderPermission, setReminderPermission] = useState(getNotificationPermissionStatus());
+  const [reminderSaving, setReminderSaving] = useState(false);
+  const [reminderToast, setReminderToast] = useState<{ show: boolean; msg: string; isError?: boolean }>({ show: false, msg: "" });
+
+  useEffect(() => {
+    loadUserReminderSettings(user?.uid).then((settings) => {
+      setReminderSettings(settings);
+      setReminderPermission(getNotificationPermissionStatus());
+    });
+
+    const handleSettingsUpdated = (e: any) => {
+      if (e.detail) {
+        setReminderSettings(e.detail);
+      } else {
+        loadUserReminderSettings(user?.uid).then(setReminderSettings);
+      }
+      setReminderPermission(getNotificationPermissionStatus());
+    };
+
+    window.addEventListener("ng-reminder-settings-updated", handleSettingsUpdated);
+    return () => {
+      window.removeEventListener("ng-reminder-settings-updated", handleSettingsUpdated);
+    };
+  }, [user?.uid]);
+
+  const handleToggleMorning = async () => {
+    const nextVal = !reminderSettings.morningReminderEnabled;
+    const updated = { ...reminderSettings, morningReminderEnabled: nextVal };
+    setReminderSettings(updated);
+    if (nextVal && reminderPermission !== "granted") {
+      const p = await requestNotificationPermission();
+      setReminderPermission(p);
+      setReminderSettings(prev => ({ ...prev, notificationPermission: p }));
+    }
+  };
+
+  const handleToggleEvening = async () => {
+    const nextVal = !reminderSettings.eveningReminderEnabled;
+    const updated = { ...reminderSettings, eveningReminderEnabled: nextVal };
+    setReminderSettings(updated);
+    if (nextVal && reminderPermission !== "granted") {
+      const p = await requestNotificationPermission();
+      setReminderPermission(p);
+      setReminderSettings(prev => ({ ...prev, notificationPermission: p }));
+    }
+  };
+
+  const handleSaveReminders = async () => {
+    setReminderSaving(true);
+    try {
+      await saveUserReminderSettings(user?.uid, reminderSettings);
+      setReminderToast({ show: true, msg: "Reminder settings saved successfully! ✨", isError: false });
+    } catch {
+      setReminderToast({ show: true, msg: "Failed to save reminder settings.", isError: true });
+    } finally {
+      setReminderSaving(false);
+      setTimeout(() => setReminderToast({ show: false, msg: "" }), 3500);
+    }
+  };
+
+  const handleTestNotification = async () => {
+    const res = await sendTestNotification();
+    setReminderPermission(getNotificationPermissionStatus());
+    setReminderToast({ show: true, msg: res.message, isError: !res.sent });
+    setTimeout(() => setReminderToast({ show: false, msg: "" }), 4000);
+  };
 
   // Custom step modal / form state
   const [showCustomModal, setShowCustomModal] = useState(false);
@@ -317,6 +403,218 @@ export default function RoutinePlanner({
           Build and validate your AM/PM skincare routine with the Routine Agent
         </p>
       </div>
+
+      {/* Skincare Routine Reminders Quick-Access Banner */}
+      <div className="rounded-2xl bg-white border border-rose-100 p-4 shadow-3xs flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <span className="w-9 h-9 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0 border border-rose-200 shadow-3xs">
+            <BellRing className="w-4 h-4" />
+          </span>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold text-slate-800">Skincare Routine Reminders</span>
+              <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full border ${
+                reminderSettings.morningReminderEnabled || reminderSettings.eveningReminderEnabled
+                  ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                  : "bg-slate-100 text-slate-500 border-slate-200"
+              }`}>
+                {reminderSettings.morningReminderEnabled || reminderSettings.eveningReminderEnabled ? "Active" : "Disabled"}
+              </span>
+            </div>
+            <p className="text-[11px] text-slate-500 mt-0.5">
+              {reminderSettings.morningReminderEnabled ? `🌞 Morning: ${formatTimeTo12Hour(reminderSettings.morningReminderTime)}` : "🌞 Morning: Off"}
+              {" • "}
+              {reminderSettings.eveningReminderEnabled ? `🌙 Evening: ${formatTimeTo12Hour(reminderSettings.eveningReminderTime)}` : "🌙 Evening: Off"}
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2 self-end sm:self-center">
+          <button
+            type="button"
+            onClick={handleTestNotification}
+            className="px-3 py-1.5 rounded-xl bg-white hover:bg-rose-50 border border-rose-200 text-slate-700 text-xs font-semibold cursor-pointer transition-all shadow-3xs flex items-center gap-1"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-rose-500" />
+            <span>Test Alert</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setShowReminderModal(true)}
+            className="px-3.5 py-1.5 rounded-xl bg-rose-500 hover:bg-rose-600 text-white text-xs font-semibold cursor-pointer transition-all shadow-3xs flex items-center gap-1.5"
+          >
+            <Clock className="w-3.5 h-3.5" />
+            <span>Configure Reminders</span>
+          </button>
+        </div>
+      </div>
+
+      {/* Reminder Toast Feedback */}
+      {reminderToast.show && (
+        <div className={`fixed bottom-6 right-6 z-50 px-5 py-3 rounded-2xl shadow-xl border flex items-center gap-3 text-xs sm:text-sm animate-fade-in ${
+          reminderToast.isError
+            ? "bg-rose-900 text-white border-rose-700"
+            : "bg-slate-900/95 text-white border-rose-500/30 backdrop-blur-md"
+        }`}>
+          {reminderToast.isError ? (
+            <AlertCircle className="w-4 h-4 text-rose-300" />
+          ) : (
+            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+          )}
+          <span>{reminderToast.msg}</span>
+        </div>
+      )}
+
+      {/* Quick Reminder Settings Modal */}
+      {showReminderModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-fade-in">
+          <div className="bg-white rounded-3xl border border-rose-100 p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-5">
+            <div className="flex items-center justify-between border-b border-rose-100/80 pb-4">
+              <div className="flex items-center gap-2">
+                <span className="p-2 bg-rose-50 rounded-xl text-rose-600 border border-rose-100">
+                  <BellRing className="w-4 h-4" />
+                </span>
+                <div>
+                  <h3 className="text-base font-serif font-bold text-slate-900">Routine Reminders</h3>
+                  <p className="text-[11px] text-slate-500">Circadian timing for AM & PM care</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowReminderModal(false)}
+                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Permission status alert */}
+            <div className={`p-3 rounded-2xl border text-xs flex items-center justify-between ${
+              reminderPermission === "granted"
+                ? "bg-emerald-50 border-emerald-200 text-emerald-800"
+                : reminderPermission === "denied"
+                ? "bg-rose-50 border-rose-200 text-rose-800"
+                : "bg-amber-50 border-amber-200 text-amber-800"
+            }`}>
+              <div className="flex items-center gap-2">
+                {reminderPermission === "granted" ? (
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+                ) : (
+                  <AlertCircle className="w-4 h-4 shrink-0" />
+                )}
+                <span>
+                  {reminderPermission === "granted" 
+                    ? "Browser notifications enabled" 
+                    : reminderPermission === "denied" 
+                    ? "Notifications blocked in browser" 
+                    : "Browser permission required"}
+                </span>
+              </div>
+              {reminderPermission !== "granted" && (
+                <button
+                  type="button"
+                  onClick={async () => {
+                    const p = await requestNotificationPermission();
+                    setReminderPermission(p);
+                  }}
+                  className="px-2.5 py-1 bg-slate-900 text-white rounded-lg text-[10px] font-bold cursor-pointer"
+                >
+                  Enable
+                </button>
+              )}
+            </div>
+
+            {/* Morning Setting */}
+            <div className="p-4 rounded-2xl bg-[#FCFAF8] border border-rose-100/80 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <span>🌞</span> Morning Routine (AM)
+                </span>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input 
+                    type="checkbox" 
+                    checked={reminderSettings.morningReminderEnabled}
+                    onChange={handleToggleMorning}
+                    className="sr-only peer" 
+                  />
+                  <div className="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-500" />
+                </label>
+              </div>
+              <div className="flex items-center justify-between pt-1">
+                <span className="text-[11px] text-slate-500">Alert time:</span>
+                <input 
+                  type="time" 
+                  value={reminderSettings.morningReminderTime}
+                  onChange={(e) => setReminderSettings(prev => ({ ...prev, morningReminderTime: e.target.value }))}
+                  disabled={!reminderSettings.morningReminderEnabled}
+                  className="px-3 py-1.5 rounded-lg border border-rose-200 bg-white text-xs font-mono font-bold text-slate-800 disabled:opacity-50"
+                />
+              </div>
+            </div>
+
+            {/* Evening Setting */}
+            <div className="p-4 rounded-2xl bg-[#FCFAF8] border border-rose-100/80 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <span>🌙</span> Evening Routine (PM)
+                </span>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input 
+                    type="checkbox" 
+                    checked={reminderSettings.eveningReminderEnabled}
+                    onChange={handleToggleEvening}
+                    className="sr-only peer" 
+                  />
+                  <div className="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rose-500" />
+                </label>
+              </div>
+              <div className="flex items-center justify-between pt-1">
+                <span className="text-[11px] text-slate-500">Alert time:</span>
+                <input 
+                  type="time" 
+                  value={reminderSettings.eveningReminderTime}
+                  onChange={(e) => setReminderSettings(prev => ({ ...prev, eveningReminderTime: e.target.value }))}
+                  disabled={!reminderSettings.eveningReminderEnabled}
+                  className="px-3 py-1.5 rounded-lg border border-rose-200 bg-white text-xs font-mono font-bold text-slate-800 disabled:opacity-50"
+                />
+              </div>
+            </div>
+
+            {/* Action buttons */}
+            <div className="pt-2 flex items-center justify-between gap-3">
+              <button
+                type="button"
+                onClick={handleTestNotification}
+                className="px-3.5 py-2 rounded-xl bg-white hover:bg-rose-50 border border-rose-200 text-slate-700 text-xs font-semibold cursor-pointer shadow-3xs"
+              >
+                Test Alert
+              </button>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => setShowReminderModal(false)}
+                  className="px-3.5 py-2 rounded-xl text-slate-600 hover:bg-slate-100 text-xs font-semibold cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  onClick={async () => {
+                    await handleSaveReminders();
+                    setShowReminderModal(false);
+                  }}
+                  disabled={reminderSaving}
+                  className="px-4 py-2 rounded-xl bg-rose-500 hover:bg-rose-600 text-white text-xs font-semibold cursor-pointer shadow-3xs"
+                >
+                  {reminderSaving ? "Saving..." : "Save Settings"}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* AM / PM Regime Toggle Pills */}
       <div className="flex items-center justify-center gap-4">

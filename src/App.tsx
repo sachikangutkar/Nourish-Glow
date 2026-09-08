@@ -11,6 +11,7 @@ import AccountView, { MenuSection } from "./components/AccountView";
 import ComputerVisionScan from "./components/ComputerVisionScan";
 import SmartMirrorIoT from "./components/SmartMirrorIoT";
 import DermConsultation from "./components/DermConsultation";
+import RoutineReminderManager from "./components/RoutineReminderManager";
 import { RoutineStep, SkinAnalysis, DailyLog, SkincareProduct, PaymentCard, VisionScanResult } from "./types";
 import { getUserItem, setUserItem } from "./lib/userStorage";
 import { 
@@ -595,6 +596,20 @@ export default function App() {
     }
   };
 
+  const handleCompleteAllSteps = (regime: "AM" | "PM") => {
+    if (regime === "AM") {
+      const updated = (amRoutine || []).map(s => ({ ...s, completed: true }));
+      setAmRoutine(updated);
+      saveToStorage("glow_sense_am_routine", updated);
+      updated.forEach((s, idx) => syncStepToCloud("AM", s, idx));
+    } else {
+      const updated = (pmRoutine || []).map(s => ({ ...s, completed: true }));
+      setPmRoutine(updated);
+      saveToStorage("glow_sense_pm_routine", updated);
+      updated.forEach((s, idx) => syncStepToCloud("PM", s, idx));
+    }
+  };
+
   // Catalog integrations
   const handleAddProductToRoutine = (regime: "AM" | "PM", product: SkincareProduct) => {
     handleAddStep(regime, {
@@ -791,6 +806,7 @@ export default function App() {
             onRemoveStep={handleRemoveStep} 
             onToggleComplete={handleToggleStepComplete} 
             onNavigate={handleNavigateTab}
+            user={user}
           />
         )}
 
@@ -1003,6 +1019,15 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      {/* Global Routine Reminder Engine & In-App Notification Modal */}
+      <RoutineReminderManager 
+        user={user}
+        amRoutine={amRoutine}
+        pmRoutine={pmRoutine}
+        onNavigate={handleNavigateTab}
+        onCompleteRoutine={handleCompleteAllSteps}
+      />
     </div>
   );
 }

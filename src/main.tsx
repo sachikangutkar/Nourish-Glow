@@ -2,6 +2,10 @@ import {StrictMode} from 'react';
 import {createRoot} from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
+import { registerReminderServiceWorker } from './lib/reminderService';
+
+// Automatically register service worker for routine reminders if supported
+registerReminderServiceWorker();
 
 // Filter false-positive info messages emitted by TensorFlow Lite / MediaPipe wasm to console.error
 const origConsoleError = console.error;
